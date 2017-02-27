@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package savio_estadisticas.clases.Control;
+package savio_estadisticas.clases.Control.CourseContent;
 
 import com.google.gson.Gson;
 import java.io.BufferedInputStream;
@@ -19,34 +19,39 @@ import savio_estadisticas.clases.Courses;
  *
  * @author amorelos
  */
-public class GetAllCourses extends Thread {
+public class GetCourseContent extends Thread{
     private final String URL_Excecute = "http://savio.utbvirtual.edu.co/webservice/rest/server.php";
     private String JSON = null;
     private String JSON2 = null;
     private final String TOKEN = "118f6404c5140d59bab4cbd8fce04a02";
     private Gson gson = new Gson();
-    private Courses cursos;
+    private CourseContent coursecontent = new CourseContent();
+    private String Courseid;
+
+    public GetCourseContent(String Courseid) {
+        this.Courseid = Courseid;
+    }
+    
+    
     @Override
     public void run() {
         super.run(); //To change body of generated methods, choose Tools | Templates.
-        System.out.println("Buscando Cursos");
         try {
-                URL url = new URL(URL_Excecute + "?wsfunction=core_course_get_courses&wstoken=" + TOKEN + "&moodlewsrestformat=json");
+                URL url = new URL(URL_Excecute + "?wsfunction=core_course_get_contents&wstoken=" + TOKEN + "&moodlewsrestformat=json&courseid="+Courseid);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream in = new BufferedInputStream(urlConnection.getInputStream());
                 JSON = getStringFromInputStream(in);
                 urlConnection.disconnect();
-                JSON2 = "{\"course\" :" + JSON + "}";
+                JSON2 = "{\"content\" :" + JSON + "}";
                 
-                cursos = gson.fromJson(JSON2,Courses.class);
+                coursecontent = gson.fromJson(JSON2,CourseContent.class);
                 
                 
                }catch (Exception e){
                     System.out.println(e.getMessage());
                } 
-        System.out.println("Cursos Encotrados");
+        
     }
-    
     
     private static String getStringFromInputStream(InputStream is) {
 
@@ -77,14 +82,20 @@ public class GetAllCourses extends Thread {
 
     }
 
-    public Courses getCursos() {
-        return cursos;
+    public CourseContent getCoursecontent() {
+        return coursecontent;
     }
 
-    public void setCursos(Courses cursos) {
-        this.cursos = cursos;
+    public void setCoursecontent(CourseContent coursecontent) {
+        this.coursecontent = coursecontent;
+    }
+
+    public String getCourseid() {
+        return Courseid;
+    }
+
+    public void setCourseid(String Courseid) {
+        this.Courseid = Courseid;
     }
     
-    
-  }
-
+}

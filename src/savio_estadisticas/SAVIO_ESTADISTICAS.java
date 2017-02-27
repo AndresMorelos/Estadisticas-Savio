@@ -5,10 +5,15 @@
  */
 package savio_estadisticas;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import savio_estadisticas.clases.Control.CategoriesControl;
+import savio_estadisticas.clases.Control.CourseContent.CourseContent;
+import savio_estadisticas.clases.Control.CourseContent.GetCourseContent;
+import savio_estadisticas.clases.Control.CourseContent.NodeContent;
+import savio_estadisticas.clases.Control.CourseContent.countcontent;
 import savio_estadisticas.clases.Control.GetAllCourses;
 import savio_estadisticas.clases.Control.Progress;
 import savio_estadisticas.clases.Course;
@@ -28,7 +33,8 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
         initComponents();
         jComboBox1.setVisible(false);
         getsheet.setVisible(false);
-         Progress p = new Progress(jProgressBar1,jLabel1,jComboBox1,getsheet);
+        openfile.setVisible(false);
+         p = new Progress(jProgressBar1,jLabel1,jComboBox1,getsheet);
          p.execute();
     }
     
@@ -109,7 +115,34 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void getsheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getsheetActionPerformed
-        // TODO add your handling code here:
+       String Name = (String) jComboBox1.getSelectedItem();
+       System.out.println(Name);
+       nodos_finales = p.getNodos_finales();
+       for(Node x : nodos_finales){
+           if (x.getNameCategory().equals(Name)){
+               //Code to get content and generate sheet
+               for(Course h: x.getCategoryCourses()){
+                   try {
+                       GetCourseContent getcontent = new GetCourseContent(Integer.toString(h.getId()));
+                       getcontent.start();
+                       getcontent.join();
+                       CourseContent coursecontent = getcontent.getCoursecontent();
+                       for(NodeContent j: contenidocursos){
+                            if(j.getCourseName().equals(h.getShortname())){
+                                for(countcontent o: j.getContent()){
+                                    //add
+                                }
+                            }else{
+                                contenidocursos.add(new NodeContent(j.getCourseName()));
+                            }
+                       }
+                       
+                   } catch (InterruptedException ex) {
+                       Logger.getLogger(SAVIO_ESTADISTICAS.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+               }
+           }
+       }
     }//GEN-LAST:event_getsheetActionPerformed
 
     /**
@@ -158,7 +191,9 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JToggleButton openfile;
     // End of variables declaration//GEN-END:variables
-
+    private Progress p;
+    private List<Node> nodos_finales;
+    private List<NodeContent> contenidocursos = new ArrayList<NodeContent>();
 
     
     

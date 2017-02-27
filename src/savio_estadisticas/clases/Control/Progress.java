@@ -30,6 +30,9 @@ public class Progress extends SwingWorker<Integer,String> {
     private JLabel jlb;
     private JComboBox jComboBox1;
     private JToggleButton jbtn;
+    private List<Node> nodos_finales;
+
+    
 
     public Progress(JProgressBar jpbar, JLabel jlb,JComboBox jComboBox1,JToggleButton jbtn) {
         this.jpbar = jpbar;
@@ -91,7 +94,7 @@ public class Progress extends SwingWorker<Integer,String> {
             categoriescontrol.setName("categoriescontrol");
             categoriescontrol.join();
             
-            List<Node> nodos_finales = categoriescontrol.getNodesCategories();
+            nodos_finales = categoriescontrol.getNodesCategories();
             
             //Creando Lista de Nombres de las categorias
             
@@ -161,6 +164,14 @@ public class Progress extends SwingWorker<Integer,String> {
      */
     public void setJbtn(JToggleButton jbtn) {
         this.jbtn = jbtn;
+    }
+    
+    public List<Node> getNodos_finales() {
+        return nodos_finales;
+    }
+
+    public void setNodos_finales(List<Node> nodos_finales) {
+        this.nodos_finales = nodos_finales;
     }
     
 }
