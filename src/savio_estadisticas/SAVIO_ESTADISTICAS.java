@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import savio_estadisticas.clases.Control.CategoriesControl;
+import savio_estadisticas.clases.Control.CourseContent.Content;
+import savio_estadisticas.clases.Control.CourseContent.Content_;
 import savio_estadisticas.clases.Control.CourseContent.CourseContent;
 import savio_estadisticas.clases.Control.CourseContent.GetCourseContent;
+import savio_estadisticas.clases.Control.CourseContent.Module;
 import savio_estadisticas.clases.Control.CourseContent.NodeContent;
 import savio_estadisticas.clases.Control.CourseContent.countcontent;
 import savio_estadisticas.clases.Control.GetAllCourses;
@@ -34,12 +38,10 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
         jComboBox1.setVisible(false);
         getsheet.setVisible(false);
         openfile.setVisible(false);
-         p = new Progress(jProgressBar1,jLabel1,jComboBox1,getsheet);
-         p.execute();
+        p = new Progress(jProgressBar1, jLabel1, jComboBox1, getsheet);
+        p.execute();
     }
-    
-    
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -115,34 +117,81 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void getsheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getsheetActionPerformed
-       String Name = (String) jComboBox1.getSelectedItem();
-       System.out.println(Name);
-       nodos_finales = p.getNodos_finales();
-       for(Node x : nodos_finales){
-           if (x.getNameCategory().equals(Name)){
-               //Code to get content and generate sheet
-               for(Course h: x.getCategoryCourses()){
-                   try {
-                       GetCourseContent getcontent = new GetCourseContent(Integer.toString(h.getId()));
-                       getcontent.start();
-                       getcontent.join();
-                       CourseContent coursecontent = getcontent.getCoursecontent();
-                       for(NodeContent j: contenidocursos){
-                            if(j.getCourseName().equals(h.getShortname())){
-                                for(countcontent o: j.getContent()){
-                                    //add
+        String Name = (String) jComboBox1.getSelectedItem();
+        System.out.println(Name);
+        nodos_finales = p.getNodos_finales();
+        for (Node x : nodos_finales) {
+            if (x.getNameCategory().equals(Name)) {
+                //Code to get content and generate sheet
+                for (Course h : x.getCategoryCourses()) {
+                    try {
+                        GetCourseContent getcontent = new GetCourseContent(Integer.toString(h.getId()));
+                        getcontent.start();
+                        getcontent.join();
+                        CourseContent coursecontent = getcontent.getCoursecontent();
+
+                        for (Content contenido : coursecontent.getContent()) {
+                            if (contenido.getVisible() == 1) {
+                                for (Module mod : contenido.getModules()) {
+                                    switch (mod.getModplural()) {
+                                        //Actividades
+                                        case "Etiquetas":
+                                            h.getCountContent().upgradeEtiquetas();
+                                            break;
+                                        case "Tareas":
+                                            h.getCountContent().upgradeTareas();
+                                            break;
+                                        case "Foros":
+                                            h.getCountContent().upgradeForos();
+                                            break;
+                                        case "Chats":
+                                            h.getCountContent().upgradeChats();
+                                            break;
+                                        case "Consultas":
+                                            h.getCountContent().upgradeConsultas();
+                                            break;
+                                        case "Lecciones":
+                                            h.getCountContent().upgradeLecciones();
+                                            break;
+                                        case "Wikis":
+                                            h.getCountContent().upgradeWikis();
+                                            break;
+                                        case "Bases de datos":
+                                            h.getCountContent().upgradeBases_de_datos();
+                                            break;
+                                        case "Paquetes SCORM":
+                                            h.getCountContent().upgradePaquetes_SCORM();
+                                            break;
+                                        //Recursos
+                                        case "Archivos":
+                                            for(Content_ fileContent : mod.getContents()){
+                                                h.getCountContent().upgradeArchivos();
+                                            }
+                                            break;
+                                        case "URLs":
+                                            h.getCountContent().upgradeURLs();
+                                            break;
+                                        case "Libros":
+                                            h.getCountContent().upgradeLibros();
+                                            break;
+                                        case "Libros (Plantilla)":
+                                            h.getCountContent().upgradeLibros();
+                                            break;
+                                    }
                                 }
-                            }else{
-                                contenidocursos.add(new NodeContent(j.getCourseName()));
                             }
-                       }
-                       
-                   } catch (InterruptedException ex) {
-                       Logger.getLogger(SAVIO_ESTADISTICAS.class.getName()).log(Level.SEVERE, null, ex);
-                   }
-               }
-           }
-       }
+                        }
+
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(SAVIO_ESTADISTICAS.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                }
+                
+               
+                break;
+            }
+        }
     }//GEN-LAST:event_getsheetActionPerformed
 
     /**
@@ -177,11 +226,10 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new SAVIO_ESTADISTICAS().setVisible(true);
-            }           
+            }
         });
-        
-       //ChargeAll();
-         
+
+        //ChargeAll();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -193,8 +241,5 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private Progress p;
     private List<Node> nodos_finales;
-    private List<NodeContent> contenidocursos = new ArrayList<NodeContent>();
 
-    
-    
 }

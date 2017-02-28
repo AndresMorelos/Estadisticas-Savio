@@ -8,6 +8,7 @@ package savio_estadisticas.clases;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import savio_estadisticas.clases.Control.CourseContent.countcontent;
 
 public class Course {
 
@@ -95,6 +96,7 @@ private List<Courseformatoption> courseformatoptions = null;
 @SerializedName("hiddensections")
 @Expose
 private Integer hiddensections;
+private countcontent CountContent = new countcontent();
     public String getCategoryid;
 
 public Integer getId() {
@@ -320,5 +322,19 @@ return hiddensections;
 public void setHiddensections(Integer hiddensections) {
 this.hiddensections = hiddensections;
 }
+
+    /**
+     * @return the CountContent
+     */
+    public countcontent getCountContent() {
+        return CountContent;
+    }
+
+    /**
+     * @param CountContent the CountContent to set
+     */
+    public void setCountContent(countcontent CountContent) {
+        this.CountContent = CountContent;
+    }
 
 }
