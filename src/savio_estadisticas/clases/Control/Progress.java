@@ -31,14 +31,16 @@ public class Progress extends SwingWorker<Integer,String> {
     private JComboBox jComboBox1;
     private JToggleButton jbtn;
     private List<Node> nodos_finales;
+    private JComboBox type;
 
     
 
-    public Progress(JProgressBar jpbar, JLabel jlb,JComboBox jComboBox1,JToggleButton jbtn) {
+    public Progress(JProgressBar jpbar, JLabel jlb,JComboBox jComboBox1,JToggleButton jbtn,JComboBox Type) {
         this.jpbar = jpbar;
         this.jlb = jlb;
         this.jComboBox1 = jComboBox1;
         this.jbtn = jbtn;
+        this.type = Type;
     }
 
     
@@ -114,6 +116,7 @@ public class Progress extends SwingWorker<Integer,String> {
             getjComboBox1().setModel(model);
             
             getjComboBox1().setVisible(true);
+            getType().setVisible(true);
             getJbtn().setVisible(true);
             
             
@@ -172,6 +175,20 @@ public class Progress extends SwingWorker<Integer,String> {
 
     public void setNodos_finales(List<Node> nodos_finales) {
         this.nodos_finales = nodos_finales;
+    }
+
+    /**
+     * @return the type
+     */
+    public JComboBox getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(JComboBox type) {
+        this.type = type;
     }
     
 }

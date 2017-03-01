@@ -23,6 +23,9 @@ public class countcontent {
     private long URLs;
     private long Paginas;
     private long Libros;
+    private long Cuestionarios;
+    private long Talleres;
+    private long Laboratorios_virtuales_de_programacion;
     
     public countcontent() {
         this.Tareas = 0;
@@ -38,6 +41,9 @@ public class countcontent {
         this.URLs = 0;
         this.Paginas = 0;
         this.Libros = 0;
+        this.Cuestionarios = 0;
+        this.Talleres = 0;
+        this.Laboratorios_virtuales_de_programacion = 0;
     }
 
     /**
@@ -217,6 +223,18 @@ public class countcontent {
     public void upgradeWikis(){
         this.setWikis(this.getWikis() + 1);
     }
+    
+    public void upgradeCuestionarios(){
+        this.setCuestionarios(this.getCuestionarios()+1);
+    }
+    
+    public void upgradeTalleres(){
+        this.setTalleres(this.getTalleres()+1);
+    }
+    
+    public void upgradeLaboratorios_virtuales_de_programacion(){
+        this.setLaboratorios_virtuales_de_programacion(this.getLaboratorios_virtuales_de_programacion()+1);
+    }
 
     /**
      * @return the Archivos
@@ -272,6 +290,48 @@ public class countcontent {
      */
     public void setLibros(long Libros) {
         this.Libros = Libros;
+    }
+
+    /**
+     * @return the Cuestionarios
+     */
+    public long getCuestionarios() {
+        return Cuestionarios;
+    }
+
+    /**
+     * @param Cuestionarios the Cuestionarios to set
+     */
+    public void setCuestionarios(long Cuestionarios) {
+        this.Cuestionarios = Cuestionarios;
+    }
+
+    /**
+     * @return the Talleres
+     */
+    public long getTalleres() {
+        return Talleres;
+    }
+
+    /**
+     * @param Talleres the Talleres to set
+     */
+    public void setTalleres(long Talleres) {
+        this.Talleres = Talleres;
+    }
+
+    /**
+     * @return the Laboratorios_virtuales_de_programación
+     */
+    public long getLaboratorios_virtuales_de_programacion() {
+        return Laboratorios_virtuales_de_programacion;
+    }
+
+    /**
+     * @param Laboratorios_virtuales_de_programación the Laboratorios_virtuales_de_programación to set
+     */
+    public void setLaboratorios_virtuales_de_programacion(long Laboratorios_virtuales_de_programación) {
+        this.Laboratorios_virtuales_de_programacion = Laboratorios_virtuales_de_programación;
     }
     
 }

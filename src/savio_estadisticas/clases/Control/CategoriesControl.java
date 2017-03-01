@@ -98,7 +98,7 @@ public class CategoriesControl extends Thread{
                                         h.addCourse(a);
                                         progress++;
                                         getJpbar().setValue(progress);
-                                        getJlLab().setText("Analizando Categorias "+ progress +"/"+ All_Courses.size());
+                                        getJlLab().setText("Filtrando Cursos Por Categoria "+ progress +"/"+ All_Courses.size());
                                     }
                                     
                                     break;
@@ -118,7 +118,7 @@ public class CategoriesControl extends Thread{
                                         h.addCourse(a);
                                         progress++;
                                         getJpbar().setValue(progress);
-                                        getJlLab().setText("Analizando Categorias "+ progress +"/"+ All_Courses.size());
+                                        getJlLab().setText("Filtrando Cursos Por Categoria "+ progress +"/"+ All_Courses.size());
                                     } 
                                     
                                     System.out.println("Agreado"); 

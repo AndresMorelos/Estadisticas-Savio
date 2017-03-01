@@ -5,11 +5,19 @@
  */
 package savio_estadisticas;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import savio_estadisticas.clases.Control.CategoriesControl;
 import savio_estadisticas.clases.Control.CourseContent.Content;
 import savio_estadisticas.clases.Control.CourseContent.Content_;
@@ -30,16 +38,22 @@ import savio_estadisticas.clases.Node;
  */
 public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
 
+    public static String Directorio = System.getProperty("user.home") + File.separator + "Documents";
+
     /**
      * Creates new form SAVIO_ESTADISTICAS2
      */
     public SAVIO_ESTADISTICAS() {
+        System.out.println(Directorio);
         initComponents();
-        jComboBox1.setVisible(false);
+        Categories.setVisible(false);
         getsheet.setVisible(false);
         openfile.setVisible(false);
-        p = new Progress(jProgressBar1, jLabel1, jComboBox1, getsheet);
+        Type.setVisible(false);
+        p = new Progress(BarraProgreso, TextDescriptions, Categories, getsheet, Type);
         p.execute();
+        setTitle("Estadisticas Savio");
+
     }
 
     /**
@@ -51,17 +65,18 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jProgressBar1 = new javax.swing.JProgressBar();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        BarraProgreso = new javax.swing.JProgressBar();
+        TextDescriptions = new javax.swing.JLabel();
+        Categories = new javax.swing.JComboBox();
         getsheet = new javax.swing.JToggleButton();
         openfile = new javax.swing.JToggleButton();
+        Type = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Cargando...");
+        TextDescriptions.setText("Cargando...");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        Categories.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         getsheet.setText("Generar");
         getsheet.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +86,13 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
         });
 
         openfile.setText("Abrir");
+        openfile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openfileActionPerformed(evt);
+            }
+        });
+
+        Type.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cursos Innovadores", "Cursos En Blanco" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -79,37 +101,40 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(60, 60, 60)
+                                .addComponent(getsheet, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(openfile, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(getsheet, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(openfile, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 31, Short.MAX_VALUE)))
+                                    .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Categories, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 31, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TextDescriptions, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BarraProgreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(96, 96, 96)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addComponent(Categories, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Type, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(getsheet)
                     .addComponent(openfile))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addGap(84, 84, 84)
+                .addComponent(TextDescriptions)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(BarraProgreso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -117,8 +142,10 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void getsheetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getsheetActionPerformed
-        String Name = (String) jComboBox1.getSelectedItem();
-        System.out.println(Name);
+        String Name = (String) Categories.getSelectedItem();
+        String DocumentType = (String) Type.getSelectedItem();
+        String FileName = Directorio + Name + "_" + DocumentType + ".xls";
+
         nodos_finales = p.getNodos_finales();
         for (Node x : nodos_finales) {
             if (x.getNameCategory().equals(Name)) {
@@ -162,9 +189,19 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
                                         case "Paquetes SCORM":
                                             h.getCountContent().upgradePaquetes_SCORM();
                                             break;
+                                        case "Laboratorios virtuales de programación":
+                                            h.getCountContent().upgradeLaboratorios_virtuales_de_programacion();
+                                            break;
+
+                                        case "Talleres":
+                                            h.getCountContent().upgradeTalleres();
+                                            break;
+                                        case "Cuestionarios":
+                                            h.getCountContent().upgradeCuestionarios();
+                                            break;
                                         //Recursos
                                         case "Archivos":
-                                            for(Content_ fileContent : mod.getContents()){
+                                            for (Content_ fileContent : mod.getContents()) {
                                                 h.getCountContent().upgradeArchivos();
                                             }
                                             break;
@@ -177,6 +214,9 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
                                         case "Libros (Plantilla)":
                                             h.getCountContent().upgradeLibros();
                                             break;
+                                        case "Páginas":
+                                            h.getCountContent().upgradePaginas();
+                                            break;
                                     }
                                 }
                             }
@@ -185,14 +225,21 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
                     } catch (InterruptedException ex) {
                         Logger.getLogger(SAVIO_ESTADISTICAS.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    
+
                 }
-                
-               
+                CreateSheet(DocumentType, x, FileName);
                 break;
             }
         }
     }//GEN-LAST:event_getsheetActionPerformed
+
+    private void openfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openfileActionPerformed
+        try {
+            Desktop.getDesktop().open(Archivo_Ubicacion);
+        } catch (IOException ex) {
+            Logger.getLogger(SAVIO_ESTADISTICAS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_openfileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -233,13 +280,187 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar BarraProgreso;
+    private javax.swing.JComboBox Categories;
+    private javax.swing.JLabel TextDescriptions;
+    private javax.swing.JComboBox Type;
     private javax.swing.JToggleButton getsheet;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JToggleButton openfile;
     // End of variables declaration//GEN-END:variables
     private Progress p;
     private List<Node> nodos_finales;
+    private File Archivo_Ubicacion;
+
+    public void CreateSheet(String type, Node category, String FileName) {
+        switch (type) {
+            case "Cursos Innovadores":
+                System.out.println("Tipo: " + type);
+                break;
+            case "Cursos En Blanco":
+                List<Course> cursosvacios = new ArrayList<Course>();
+
+                for (Course h : category.getCategoryCourses()) {
+                    if (h.getCountContent().getTareas() == 0 && h.getCountContent().getConsultas() == 0 && h.getCountContent().getEtiquetas() == 0
+                            && h.getCountContent().getForos() == 0 && h.getCountContent().getChats() == 0 && h.getCountContent().getWikis() == 0
+                            && h.getCountContent().getBases_de_datos() == 0 && h.getCountContent().getPaquetes_SCORM() == 0 && h.getCountContent().getArchivos() == 0
+                            && h.getCountContent().getURLs() == 0 && h.getCountContent().getPaginas() == 0 && h.getCountContent().getCuestionarios() == 0 && h.getCountContent().getTalleres() == 0
+                            && h.getCountContent().getLaboratorios_virtuales_de_programacion() == 0) {
+                        cursosvacios.add(h);
+                    }
+
+                }
+
+                try {
+                    File hojadecalculo = new File(FileName);
+
+                    if (hojadecalculo.exists()) {
+                        hojadecalculo.delete();
+                    }
+                    hojadecalculo.createNewFile();
+
+                    Workbook libro = new HSSFWorkbook();
+
+                    FileOutputStream archivo = new FileOutputStream(hojadecalculo);
+
+                    Sheet hoja = libro.createSheet("Tabla");
+
+                    for (int i = 0; i < cursosvacios.size(); i++) {
+                        Row fila = hoja.createRow(0);
+                        for (int j = 0; j < 17; j++) {
+                            Cell celda = fila.createCell(i);
+                            if (i == 0) {
+                                switch (j) {
+                                    case 0:
+                                        celda.setCellValue("Nombre Curso");
+                                        break;
+                                    case 1:
+                                        celda.setCellValue("Tareas");
+                                        break;
+                                    case 2:
+                                        celda.setCellValue("Consultas");
+                                        break;
+
+                                    case 3:
+                                        celda.setCellValue("Etiquetas");
+                                        break;
+
+                                    case 4:
+                                        celda.setCellValue("Foros");
+                                        break;
+                                    case 5:
+                                        celda.setCellValue("Chats");
+                                        break;
+                                    case 6:
+                                        celda.setCellValue("Lecciones");
+                                        break;
+                                    case 7:
+                                        celda.setCellValue("Wikis");
+                                        break;
+                                    case 8:
+                                        celda.setCellValue("Bases de Datos");
+                                        break;
+                                    case 9:
+                                        celda.setCellValue("Paquetes SCORM");
+                                        break;
+                                    case 10:
+                                        celda.setCellValue("Archivos");
+                                        break;
+                                    case 11:
+                                        celda.setCellValue("URLs");
+                                        break;
+                                    case 12:
+                                        celda.setCellValue("Paginas");
+                                        break;
+                                    case 13:
+                                        celda.setCellValue("Cuestionarios");
+                                        break;
+                                    case 14:
+                                        celda.setCellValue("Talleres");
+                                        break;
+                                    case 15:
+                                        celda.setCellValue("VPL");
+                                        break;
+                                    case 16:
+                                        celda.setCellValue("Profesor");
+                                        break;
+
+                                }
+                            } else {
+                                switch (j) {
+                                    case 0:
+                                        celda.setCellValue(cursosvacios.get(i).getFullname());
+                                        break;
+                                    case 1:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getTareas());
+                                        break;
+                                    case 2:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getConsultas());
+                                        break;
+
+                                    case 3:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getEtiquetas());
+                                        break;
+
+                                    case 4:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getForos());
+                                        break;
+                                    case 5:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getChats());
+                                        break;
+                                    case 6:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getLecciones());
+                                        break;
+                                    case 7:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getWikis());
+                                        break;
+                                    case 8:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getBases_de_datos());
+                                        break;
+                                    case 9:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getPaquetes_SCORM());
+                                        break;
+                                    case 10:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getArchivos());
+                                        break;
+                                    case 11:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getURLs());
+                                        break;
+                                    case 12:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getPaginas());
+                                        break;
+                                    case 13:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getCuestionarios());
+                                        break;
+                                    case 14:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getTalleres());
+                                        break;
+                                    case 15:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
+                                        break;
+                                    case 16:
+                                        celda.setCellValue("Nombre Profesor");
+                                        break;
+
+                                }
+
+                            }
+
+                        }
+                    }
+                    
+                    Archivo_Ubicacion = hojadecalculo;
+                    openfile.setVisible(true);
+                } catch (Exception e) {
+
+                    System.err.println(e.getMessage());
+
+                }
+
+                System.out.println("Tipo: " + type);
+                break;
+
+        }
+
+    }
 
 }
