@@ -6,6 +6,8 @@
 package savio_estadisticas.clases.Control;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,13 +31,13 @@ public class Progress extends SwingWorker<Integer,String> {
     private JProgressBar jpbar;
     private JLabel jlb;
     private JComboBox jComboBox1;
-    private JToggleButton jbtn;
+    private JButton jbtn;
     private List<Node> nodos_finales;
     private JComboBox type;
 
     
 
-    public Progress(JProgressBar jpbar, JLabel jlb,JComboBox jComboBox1,JToggleButton jbtn,JComboBox Type) {
+    public Progress(JProgressBar jpbar, JLabel jlb,JComboBox jComboBox1,JButton jbtn,JComboBox Type) {
         this.jpbar = jpbar;
         this.jlb = jlb;
         this.jComboBox1 = jComboBox1;
@@ -108,7 +110,7 @@ public class Progress extends SwingWorker<Integer,String> {
             
             DefaultComboBoxModel model = (DefaultComboBoxModel) getjComboBox1().getModel();
             model.removeAllElements();
-            
+            Collections.sort(categorias);
             for(String name : categorias){
                 model.addElement(name);
             }
@@ -158,14 +160,14 @@ public class Progress extends SwingWorker<Integer,String> {
     /**
      * @return the jbtn
      */
-    public JToggleButton getJbtn() {
+    public JButton getJbtn() {
         return jbtn;
     }
 
     /**
      * @param jbtn the jbtn to set
      */
-    public void setJbtn(JToggleButton jbtn) {
+    public void setJbtn(JButton jbtn) {
         this.jbtn = jbtn;
     }
     

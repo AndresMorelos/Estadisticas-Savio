@@ -30,7 +30,8 @@ import savio_estadisticas.clases.Node;
  *
  * @author amorelos
  */
-public class CategoriesControl extends Thread{
+public class CategoriesControl extends Thread {
+
     private List<Node> NodesCategories = new ArrayList<Node>();
     private List<Course> All_Courses;
     private final int N;
@@ -39,17 +40,18 @@ public class CategoriesControl extends Thread{
     private int progress = 0;
     private JProgressBar jpbar;
     private JLabel jlLab;
-    
+
     private final String URI = "http://savio.utbvirtual.edu.co/course/category/";
     private Gson gson = new Gson();
     private getCatergories GetCategories = new getCatergories();
+
     public CategoriesControl(List<Course> All_Courses, JProgressBar jpbar, JLabel jlLab) {
         this.All_Courses = All_Courses;
         this.N = this.All_Courses.size();
-        this.L = N/20;
+        this.L = N / 20;
         this.jpbar = jpbar;
         this.jlLab = jlLab;
-        
+
     }
 
     public List<Node> getNodesCategories() {
@@ -72,73 +74,72 @@ public class CategoriesControl extends Thread{
     public void run() {
         super.run();
         ThreadGroup t1 = new ThreadGroup("Grupo Categorias");
-        for (int i = 0; i <= N; i = i+L) {
-                List<Course> part;
-               
-                 if (k == 20) {
-                part = this.All_Courses.subList(i, Math.min(N, i+L) + 1);
-                 System.out.println(Math.min(N, i+L) + 1);
-                }else{
-                 part = this.All_Courses.subList(i, Math.min(N, i+L));
-                 System.out.println(Math.min(N, i+L) );
-                 }
-                k++;
-                Thread myThread = new Thread(t1,new Runnable(){
-            public  void run(){
-                for(Course a : part){
-                        
-                    if(a.getCategoryid() == 0){
-                    }else{
-                        CategoryName categoryname = GetCategories.GetCategories(Integer.toString(a.getCategoryid()));
-                        if (exitsnode(categoryname.getName())) {
-                            for(Node h : NodesCategories){
-                                if(h.getNameCategory().equalsIgnoreCase(categoryname.getName())){
+        for (int i = 0; i <= N; i = i + L) {
+            List<Course> part;
 
-                                    synchronized(NodesCategories){
-                                        h.addCourse(a);
-                                        progress++;
-                                        getJpbar().setValue(progress);
-                                        getJlLab().setText("Filtrando Cursos Por Categoria "+ progress +"/"+ All_Courses.size());
+            if (k == 20) {
+                part = this.All_Courses.subList(i, Math.min(N, i + L) + 1);
+                System.out.println(Math.min(N, i + L) + 1);
+            } else {
+                part = this.All_Courses.subList(i, Math.min(N, i + L));
+                System.out.println(Math.min(N, i + L));
+            }
+            k++;
+            Thread myThread = new Thread(t1, new Runnable() {
+                public void run() {
+                    for (Course a : part) {
+
+                        if (a.getCategoryid() == 0) {
+                        } else {
+                            CategoryName categoryname = GetCategories.GetCategories(Integer.toString(a.getCategoryid()));
+                            if (exitsnode(categoryname.getName())) {
+                                for (Node h : NodesCategories) {
+                                    if (h.getNameCategory().equalsIgnoreCase(categoryname.getName())) {
+
+                                        synchronized (NodesCategories) {
+                                            h.addCourse(a);
+                                            progress++;
+                                            getJpbar().setValue(progress);
+                                            getJlLab().setText("Filtrando Cursos Por Categoria " + progress + "/" + All_Courses.size());
+                                        }
+
+                                        break;
                                     }
-                                    
-                                    break;
+                                }
+                            } else {
+                                System.out.println("Nodo Creado");
+
+                                synchronized (NodesCategories) {
+                                    NodesCategories.add(new Node(categoryname.getName()));
+                                }
+
+                                for (Node h : NodesCategories) {
+                                    if (h.getNameCategory().equalsIgnoreCase(categoryname.getName())) {
+
+                                        synchronized (NodesCategories) {
+                                            h.addCourse(a);
+                                            progress++;
+                                            getJpbar().setValue(progress);
+                                            getJlLab().setText("Filtrando Cursos Por Categoria " + progress + "/" + All_Courses.size());
+                                        }
+
+                                        System.out.println("Agreado");
+
+                                        break;
+                                    }
                                 }
                             }
-                        }else{
-                            System.out.println("Nodo Creado"); 
-                            
-                            synchronized(NodesCategories){
-                                NodesCategories.add(new Node(categoryname.getName())); 
-                            }
-                            
-                            for(Node h : NodesCategories){ 
-                                if(h.getNameCategory().equalsIgnoreCase(categoryname.getName())){ 
-
-                                    synchronized(NodesCategories){
-                                        h.addCourse(a);
-                                        progress++;
-                                        getJpbar().setValue(progress);
-                                        getJlLab().setText("Filtrando Cursos Por Categoria "+ progress +"/"+ All_Courses.size());
-                                    } 
-                                    
-                                    System.out.println("Agreado"); 
-
-                                    break; 
-                                } 
-                            }
                         }
+
                     }
-                
-                
                 }
-            }
-        
-        });
-                myThread.start();
-                myThread.setName("FeedList" + k);
+
+            });
+            myThread.start();
+            myThread.setName("FeedList" + k);
         }
-        
-        while(t1.activeCount()>0){
+
+        while (t1.activeCount() > 0) {
             try {
                 this.join(10000);
             } catch (InterruptedException ex) {
@@ -146,23 +147,15 @@ public class CategoriesControl extends Thread{
             }
 
         }
-        
+
         getJpbar().setVisible(false);
         getJlLab().setVisible(false);
-        
-        
-       
-        
 
-        
     }
-    
-    
-    
-    
-    private boolean exitsnode(String Name){
-        for(Node h : this.NodesCategories){
-            if(h.getNameCategory().equalsIgnoreCase(Name)){
+
+    private boolean exitsnode(String Name) {
+        for (Node h : this.NodesCategories) {
+            if (h.getNameCategory().equalsIgnoreCase(Name)) {
                 return true;
             }
         }
@@ -196,7 +189,5 @@ public class CategoriesControl extends Thread{
     public void setJlLab(JLabel jlLab) {
         this.jlLab = jlLab;
     }
-    
-   
-    
+
 }

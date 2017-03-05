@@ -12,6 +12,20 @@ import savio_estadisticas.clases.Control.CourseContent.countcontent;
 
 public class Course {
 
+    /**
+     * @return the Professor
+     */
+    public String getProfessor() {
+        return Professor;
+    }
+
+    /**
+     * @param Professor the Professor to set
+     */
+    public void setProfessor(String Professor) {
+        this.Professor = Professor;
+    }
+
 @SerializedName("id")
 @Expose
 private Integer id;
@@ -97,7 +111,8 @@ private List<Courseformatoption> courseformatoptions = null;
 @Expose
 private Integer hiddensections;
 private countcontent CountContent = new countcontent();
-    public String getCategoryid;
+public String getCategoryid;
+private String Professor = "Nombre Profesor";
 
 public Integer getId() {
 return id;

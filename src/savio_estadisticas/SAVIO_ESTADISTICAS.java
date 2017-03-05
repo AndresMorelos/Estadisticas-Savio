@@ -69,15 +69,17 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
         BarraProgreso = new javax.swing.JProgressBar();
         TextDescriptions = new javax.swing.JLabel();
         Categories = new javax.swing.JComboBox();
-        getsheet = new javax.swing.JToggleButton();
-        openfile = new javax.swing.JToggleButton();
         Type = new javax.swing.JComboBox();
+        getsheet = new javax.swing.JButton();
+        openfile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         TextDescriptions.setText("Cargando...");
 
         Categories.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        Type.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cursos Innovadores", "Cursos En Blanco" }));
 
         getsheet.setText("Generar");
         getsheet.addActionListener(new java.awt.event.ActionListener() {
@@ -93,8 +95,6 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
             }
         });
 
-        Type.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Cursos Innovadores", "Cursos En Blanco" }));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,10 +104,10 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(60, 60, 60)
-                                .addComponent(getsheet, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(openfile, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(55, 55, 55)
+                                .addComponent(getsheet, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(openfile, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(30, 30, 30)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -146,11 +146,11 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
         String Name = (String) Categories.getSelectedItem();
         String DocumentType = (String) Type.getSelectedItem();
         String FileName = Directorio + Name + "_" + DocumentType + ".xls";
-
+        openfile.setVisible(false);
         nodos_finales = p.getNodos_finales();
         for (Node x : nodos_finales) {
             if (x.getNameCategory().equals(Name)) {
-                progresssheet = new ProgressSheet(openfile,DocumentType,FileName,x,BarraProgreso, TextDescriptions);
+                progresssheet = new ProgressSheet(openfile, DocumentType, FileName, x, BarraProgreso, TextDescriptions);
                 progresssheet.execute();
                 break;
             }
@@ -158,11 +158,11 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     }//GEN-LAST:event_getsheetActionPerformed
 
     private void openfileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openfileActionPerformed
-        try {
-            Desktop.getDesktop().open(Archivo_Ubicacion);
-        } catch (IOException ex) {
-            Logger.getLogger(SAVIO_ESTADISTICAS.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       try {
+             Desktop.getDesktop().open(progresssheet.getArchivo_Ubicacion());
+         } catch (IOException ex) {
+             Logger.getLogger(SAVIO_ESTADISTICAS.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }//GEN-LAST:event_openfileActionPerformed
 
     /**
@@ -208,14 +208,12 @@ public class SAVIO_ESTADISTICAS extends javax.swing.JFrame {
     private javax.swing.JComboBox Categories;
     private javax.swing.JLabel TextDescriptions;
     private javax.swing.JComboBox Type;
-    private javax.swing.JToggleButton getsheet;
-    private javax.swing.JToggleButton openfile;
+    private javax.swing.JButton getsheet;
+    private javax.swing.JButton openfile;
     // End of variables declaration//GEN-END:variables
     private Progress p;
     private ProgressSheet progresssheet;
     private List<Node> nodos_finales;
     private File Archivo_Ubicacion;
-
-    
 
 }

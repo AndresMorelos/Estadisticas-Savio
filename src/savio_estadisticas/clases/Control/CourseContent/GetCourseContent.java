@@ -19,7 +19,8 @@ import savio_estadisticas.clases.Courses;
  *
  * @author amorelos
  */
-public class GetCourseContent extends Thread{
+public class GetCourseContent {
+
     private final String URL_Excecute = "http://savio.utbvirtual.edu.co/webservice/rest/server.php";
     private String JSON = null;
     private String JSON2 = null;
@@ -31,28 +32,25 @@ public class GetCourseContent extends Thread{
     public GetCourseContent(String Courseid) {
         this.Courseid = Courseid;
     }
-    
-    
-    @Override
-    public void run() {
-        super.run(); //To change body of generated methods, choose Tools | Templates.
+
+    public CourseContent getConent() {
         try {
-                URL url = new URL(URL_Excecute + "?wsfunction=core_course_get_contents&wstoken=" + TOKEN + "&moodlewsrestformat=json&courseid="+Courseid);
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-                JSON = getStringFromInputStream(in);
-                urlConnection.disconnect();
-                JSON2 = "{\"content\" :" + JSON + "}";
-                
-                coursecontent = gson.fromJson(JSON2,CourseContent.class);
-                
-                
-               }catch (Exception e){
-                    System.out.println(e.getMessage());
-               } 
-        
+            URL url = new URL(URL_Excecute + "?wsfunction=core_course_get_contents&wstoken=" + TOKEN + "&moodlewsrestformat=json&courseid=" + Courseid);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+            JSON = getStringFromInputStream(in);
+            urlConnection.disconnect();
+            JSON2 = "{\"content\" :" + JSON + "}";
+
+            coursecontent = gson.fromJson(JSON2, CourseContent.class);
+
+            return coursecontent;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
-    
+
     private static String getStringFromInputStream(InputStream is) {
 
         BufferedReader br = null;
@@ -97,5 +95,5 @@ public class GetCourseContent extends Thread{
     public void setCourseid(String Courseid) {
         this.Courseid = Courseid;
     }
-    
+
 }

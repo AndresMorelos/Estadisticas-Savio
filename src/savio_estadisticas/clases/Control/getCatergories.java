@@ -31,7 +31,6 @@ public class getCatergories{
         categoryname.setParent(Categoryid);
         CategoryName aux = new CategoryName();
         while(!categoryname.getParent().equals("0")){
-            
                 try{
                     String JSON = null;
                     URL url = new URL(URI + "?categoryid=" + categoryname.getParent());

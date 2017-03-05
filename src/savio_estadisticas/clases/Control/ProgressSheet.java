@@ -36,7 +36,7 @@ import savio_estadisticas.clases.Node;
 public class ProgressSheet extends SwingWorker<Integer, String> {
 
     private File Archivo_Ubicacion;
-    private JToggleButton openfile;
+    private JButton openfile;
     private String DocumentType;
     private String FileName;
     private Node x;
@@ -45,10 +45,11 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
     private final int N;
     private final int L;
     private int k = 1;
+    private boolean finished = false;
 
     private int progress = 0;
 
-    public ProgressSheet(JToggleButton openfile, String DocumentType, String FileName, Node x, JProgressBar jpbar, JLabel jlb) {
+    public ProgressSheet(JButton openfile, String DocumentType, String FileName, Node x, JProgressBar jpbar, JLabel jlb) {
         this.openfile = openfile;
         this.DocumentType = DocumentType;
         this.FileName = FileName;
@@ -62,10 +63,10 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
     @Override
     protected Integer doInBackground() throws Exception {
         getJpbar().setVisible(true);
+        getJlb().setVisible(true);
         getJpbar().setMaximum(getX().getCategoryCourses().size());
         getJlb().setText("Analizando Cursos" + progress + "/" + getX().getCategoryCourses().size());
         ThreadGroup t1 = new ThreadGroup("Grupo Cursos");
-
         for (int i = 0; i <= N; i = i + L) {
             List<Course> part;
 
@@ -77,106 +78,259 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                 System.out.println(Math.min(N, i + L));
             }
             k++;
-            for (Course h : part) {
-                Thread myThread;
-                myThread = new Thread(t1, new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            GetCourseContent getcontent = new GetCourseContent(Integer.toString(h.getId()));
-                            getcontent.start();
-                            getcontent.join();
-                            CourseContent coursecontent = getcontent.getCoursecontent();
+            System.out.println("tama;o parte " + part.size());
 
-                            for (Content contenido : coursecontent.getContent()) {
-                                if (contenido.getVisible() == 1) {
-                                    for (Module mod : contenido.getModules()) {
-                                        synchronized (x) {
-                                            switch (mod.getModplural()) {
-                                                //Actividades
-                                                case "Etiquetas":
-                                                    h.getCountContent().upgradeEtiquetas();
-                                                    break;
-                                                case "Tareas":
-                                                    h.getCountContent().upgradeTareas();
-                                                    break;
-                                                case "Foros":
-                                                    h.getCountContent().upgradeForos();
-                                                    break;
-                                                case "Chats":
-                                                    h.getCountContent().upgradeChats();
-                                                    break;
-                                                case "Consultas":
-                                                    h.getCountContent().upgradeConsultas();
-                                                    break;
-                                                case "Lecciones":
-                                                    h.getCountContent().upgradeLecciones();
-                                                    break;
-                                                case "Wikis":
-                                                    h.getCountContent().upgradeWikis();
-                                                    break;
-                                                case "Bases de datos":
-                                                    h.getCountContent().upgradeBases_de_datos();
-                                                    break;
-                                                case "Paquetes SCORM":
-                                                    h.getCountContent().upgradePaquetes_SCORM();
-                                                    break;
-                                                case "Laboratorios virtuales de programación":
-                                                    h.getCountContent().upgradeLaboratorios_virtuales_de_programacion();
-                                                    break;
+            Thread myThread;
+            myThread = new Thread(t1, new Runnable() {
+                @Override
+                public void run() {
+                    for (Course h : part) {
+                        GetCourseContent getcontent = new GetCourseContent(Integer.toString(h.getId()));
+                        CourseContent coursecontent = getcontent.getConent();
+                        for (Content contenido : coursecontent.getContent()) {
+                            if (contenido.getVisible() == 1) {
+                                for (Module mod : contenido.getModules()) {
+                                    synchronized (x) {
+                                        switch (mod.getModplural()) {
+                                            //Actividades
+                                            case "Etiquetas":
+                                                h.getCountContent().upgradeEtiquetas();
+                                                break;
+                                            case "Tareas":
+                                                h.getCountContent().upgradeTareas();
+                                                break;
+                                            case "Foros":
+                                                h.getCountContent().upgradeForos();
+                                                break;
+                                            case "Chats":
+                                                h.getCountContent().upgradeChats();
+                                                break;
+                                            case "Consultas":
+                                                h.getCountContent().upgradeConsultas();
+                                                break;
+                                            case "Lecciones":
+                                                h.getCountContent().upgradeLecciones();
+                                                break;
+                                            case "Wikis":
+                                                h.getCountContent().upgradeWikis();
+                                                break;
+                                            case "Bases de datos":
+                                                h.getCountContent().upgradeBases_de_datos();
+                                                break;
+                                            case "Paquetes SCORM":
+                                                h.getCountContent().upgradePaquetes_SCORM();
+                                                break;
+                                            case "Laboratorios virtuales de programación":
+                                                h.getCountContent().upgradeLaboratorios_virtuales_de_programacion();
+                                                break;
 
-                                                case "Talleres":
-                                                    h.getCountContent().upgradeTalleres();
-                                                    break;
-                                                case "Cuestionarios":
-                                                    h.getCountContent().upgradeCuestionarios();
-                                                    break;
-                                                //Recursos
-                                                case "Archivos":
-                                                    for (Content_ fileContent : mod.getContents()) {
-                                                        h.getCountContent().upgradeArchivos();
-                                                    }
-                                                    break;
-                                                case "URLs":
-                                                    h.getCountContent().upgradeURLs();
-                                                    break;
-                                                case "Libros":
-                                                    h.getCountContent().upgradeLibros();
-                                                    break;
-                                                case "Libros (Plantilla)":
-                                                    h.getCountContent().upgradeLibros();
-                                                    break;
-                                                case "Páginas":
-                                                    h.getCountContent().upgradePaginas();
-                                                    break;
-                                            }
+                                            case "Talleres":
+                                                h.getCountContent().upgradeTalleres();
+                                                break;
+                                            case "Cuestionarios":
+                                                h.getCountContent().upgradeCuestionarios();
+                                                break;
+                                            //Recursos
+                                            case "Archivos":
+                                                for (Content_ fileContent : mod.getContents()) {
+                                                    h.getCountContent().upgradeArchivos();
+                                                }
+                                                break;
+                                            case "URLs":
+                                                h.getCountContent().upgradeURLs();
+                                                break;
+                                            case "Libros":
+                                                h.getCountContent().upgradeLibros();
+                                                break;
+                                            case "Libros (Plantilla)":
+                                                h.getCountContent().upgradeLibros();
+                                                break;
+                                            case "Páginas":
+                                                h.getCountContent().upgradePaginas();
+                                                break;
                                         }
                                     }
-                                    progress++;
-                                    getJlb().setText("Analizando Cursos" + progress + "/" + getX().getCategoryCourses().size());
                                 }
+
                             }
-
-                        } catch (InterruptedException ex) {
-
                         }
+                        progress++;
+                        getJpbar().setValue(progress);
+                        getJlb().setText("Analizando Cursos" + progress + "/" + getX().getCategoryCourses().size());
                     }
+                }
 
-                });
-                myThread.start();
-                myThread.join();
+            });
+            myThread.start();
+            myThread.setName("Busqueda de curos parte " + k);
+
+        }
+
+        while (finished == false) {
+            if (t1.activeCount() <= 0) {
+                System.out.println("Es verdadero");
+                finished = true;
             }
         }
 
         CreateSheet(getDocumentType(), getX(), getFileName());
-        getJpbar().setVisible(false);
+        //getJpbar().setVisible(false);
         return 0;
     }
 
     public void CreateSheet(String type, Node category, String FileName) {
         switch (type) {
             case "Cursos Innovadores":
-                System.out.println("Tipo: " + type);
+                List<Course> cursos = category.getCategoryCourses();
+                try {
+                    File hojadecalculo = new File(FileName);
+
+                    if (hojadecalculo.exists()) {
+                        hojadecalculo.delete();
+                    }
+                    hojadecalculo.createNewFile();
+
+                    Workbook libro = new HSSFWorkbook();
+
+                    FileOutputStream archivo = new FileOutputStream(hojadecalculo);
+
+                    Sheet hoja = libro.createSheet("Tabla");
+
+                    for (int i = 0; i < cursos.size(); i++) {
+                        Row fila = hoja.createRow(i);
+                        for (int j = 0; j < 17; j++) {
+                            Cell celda = fila.createCell(j);
+                            if (i == 0) {
+                                switch (j) {
+                                    case 0:
+                                        celda.setCellValue("Nombre Curso");
+                                        break;
+                                    case 1:
+                                        celda.setCellValue("Tareas");
+                                        break;
+                                    case 2:
+                                        celda.setCellValue("Consultas");
+                                        break;
+
+                                    case 3:
+                                        celda.setCellValue("Etiquetas");
+                                        break;
+
+                                    case 4:
+                                        celda.setCellValue("Foros");
+                                        break;
+                                    case 5:
+                                        celda.setCellValue("Chats");
+                                        break;
+                                    case 6:
+                                        celda.setCellValue("Lecciones");
+                                        break;
+                                    case 7:
+                                        celda.setCellValue("Wikis");
+                                        break;
+                                    case 8:
+                                        celda.setCellValue("Bases de Datos");
+                                        break;
+                                    case 9:
+                                        celda.setCellValue("Paquetes SCORM");
+                                        break;
+                                    case 10:
+                                        celda.setCellValue("Archivos");
+                                        break;
+                                    case 11:
+                                        celda.setCellValue("URLs");
+                                        break;
+                                    case 12:
+                                        celda.setCellValue("Paginas");
+                                        break;
+                                    case 13:
+                                        celda.setCellValue("Cuestionarios");
+                                        break;
+                                    case 14:
+                                        celda.setCellValue("Talleres");
+                                        break;
+                                    case 15:
+                                        celda.setCellValue("VPL");
+                                        break;
+                                    case 16:
+                                        celda.setCellValue("Profesor");
+                                        break;
+
+                                }
+                            } else {
+
+                                switch (j) {
+                                    case 0:
+                                        celda.setCellValue(cursos.get(i).getFullname());
+                                        break;
+                                    case 1:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getTareas());
+                                        break;
+                                    case 2:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getConsultas());
+                                        break;
+
+                                    case 3:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getEtiquetas());
+                                        break;
+
+                                    case 4:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getForos());
+                                        break;
+                                    case 5:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getChats());
+                                        break;
+                                    case 6:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getLecciones());
+                                        break;
+                                    case 7:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getWikis());
+                                        break;
+                                    case 8:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getBases_de_datos());
+                                        break;
+                                    case 9:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getPaquetes_SCORM());
+                                        break;
+                                    case 10:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getArchivos());
+                                        break;
+                                    case 11:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getURLs());
+                                        break;
+                                    case 12:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getPaginas());
+                                        break;
+                                    case 13:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getCuestionarios());
+                                        break;
+                                    case 14:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getTalleres());
+                                        break;
+                                    case 15:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
+                                        break;
+                                    case 16:
+                                        celda.setCellValue(cursos.get(i).getProfessor());
+                                        break;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                    libro.write(archivo);
+                    archivo.close();
+                    setArchivo_Ubicacion(hojadecalculo);
+                    getOpenfile().setVisible(true);
+                } catch (Exception e) {
+
+                    System.err.println(e.getMessage());
+
+                }
                 break;
             case "Cursos En Blanco":
                 List<Course> cursosvacios = new ArrayList<Course>();
@@ -186,7 +340,7 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                             && h.getCountContent().getForos() == 0 && h.getCountContent().getChats() == 0 && h.getCountContent().getWikis() == 0
                             && h.getCountContent().getBases_de_datos() == 0 && h.getCountContent().getPaquetes_SCORM() == 0 && h.getCountContent().getArchivos() == 0
                             && h.getCountContent().getURLs() == 0 && h.getCountContent().getPaginas() == 0 && h.getCountContent().getCuestionarios() == 0 && h.getCountContent().getTalleres() == 0
-                            && h.getCountContent().getLaboratorios_virtuales_de_programacion() == 0) {
+                            && h.getCountContent().getLaboratorios_virtuales_de_programacion() == 0 && h.getCountContent().getLecciones() == 0) {
                         cursosvacios.add(h);
                     }
 
@@ -321,7 +475,7 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
                                         break;
                                     case 16:
-                                        celda.setCellValue("Nombre Profesor");
+                                        celda.setCellValue(cursosvacios.get(i).getProfessor());
                                         break;
 
                                 }
@@ -366,14 +520,14 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
     /**
      * @return the openfile
      */
-    public JToggleButton getOpenfile() {
+    public JButton getOpenfile() {
         return openfile;
     }
 
     /**
      * @param openfile the openfile to set
      */
-    public void setOpenfile(JToggleButton openfile) {
+    public void setOpenfile(JButton openfile) {
         this.openfile = openfile;
     }
 
