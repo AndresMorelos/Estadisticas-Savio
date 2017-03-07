@@ -46,6 +46,7 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
     private final int L;
     private int k = 1;
     private boolean finished = false;
+    private getCatergories GetCategories = new getCatergories();
 
     private int progress = 0;
 
@@ -78,8 +79,6 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                 System.out.println(Math.min(N, i + L));
             }
             k++;
-            System.out.println("tama;o parte " + part.size());
-
             Thread myThread;
             myThread = new Thread(t1, new Runnable() {
                 @Override
@@ -154,6 +153,10 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
 
                             }
                         }
+                        // Busqueda de profesor
+                        GetParticipants participants = new GetParticipants(Integer.toString(h.getId()));
+                        h.setProfessor(participants.getParticipants());
+                        h.setCategoryName(GetCategories.GetNameCategories(Integer.toString(h.getCategoryid())));
                         progress++;
                         getJpbar().setValue(progress);
                         getJlb().setText("Analizando Cursos" + progress + "/" + getX().getCategoryCourses().size());
@@ -310,7 +313,11 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                         celda.setCellValue(cursos.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
                                         break;
                                     case 16:
-                                        celda.setCellValue(cursos.get(i).getProfessor());
+                                        /*String Profesores = null;
+                                        for(String a : cursos.get(i).getProfessor()){
+                                            Profesores =  a + "  ";
+                                        }
+                                        celda.setCellValue(Profesores);*/
                                         break;
 
                                 }
@@ -361,121 +368,134 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
 
                     for (int i = 0; i < cursosvacios.size(); i++) {
                         Row fila = hoja.createRow(i);
-                        for (int j = 0; j < 17; j++) {
+                        for (int j = 0; j < 18; j++) {
                             Cell celda = fila.createCell(j);
                             if (i == 0) {
                                 switch (j) {
                                     case 0:
-                                        celda.setCellValue("Nombre Curso");
+                                        celda.setCellValue("SubCategoria");
                                         break;
                                     case 1:
-                                        celda.setCellValue("Tareas");
+                                        celda.setCellValue("Nombre Curso");
                                         break;
                                     case 2:
+                                        celda.setCellValue("Profesor");
+                                        break;
+                                    case 3:
+                                        celda.setCellValue("Tareas");
+                                        break;
+                                    case 4:
                                         celda.setCellValue("Consultas");
                                         break;
 
-                                    case 3:
+                                    case 5:
                                         celda.setCellValue("Etiquetas");
                                         break;
 
-                                    case 4:
+                                    case 6:
                                         celda.setCellValue("Foros");
                                         break;
-                                    case 5:
+                                    case 7:
                                         celda.setCellValue("Chats");
                                         break;
-                                    case 6:
+                                    case 8:
                                         celda.setCellValue("Lecciones");
                                         break;
-                                    case 7:
+                                    case 9:
                                         celda.setCellValue("Wikis");
                                         break;
-                                    case 8:
+                                    case 10:
                                         celda.setCellValue("Bases de Datos");
                                         break;
-                                    case 9:
+                                    case 11:
                                         celda.setCellValue("Paquetes SCORM");
                                         break;
-                                    case 10:
+                                    case 12:
                                         celda.setCellValue("Archivos");
                                         break;
-                                    case 11:
+                                    case 13:
                                         celda.setCellValue("URLs");
                                         break;
-                                    case 12:
+                                    case 14:
                                         celda.setCellValue("Paginas");
                                         break;
-                                    case 13:
+                                    case 15:
                                         celda.setCellValue("Cuestionarios");
                                         break;
-                                    case 14:
+                                    case 16:
                                         celda.setCellValue("Talleres");
                                         break;
-                                    case 15:
+                                    case 17:
                                         celda.setCellValue("VPL");
                                         break;
-                                    case 16:
-                                        celda.setCellValue("Profesor");
-                                        break;
+                                    
 
                                 }
                             } else {
 
                                 switch (j) {
                                     case 0:
-                                        celda.setCellValue(cursosvacios.get(i).getFullname());
+                                        celda.setCellValue(cursosvacios.get(i).getCategoryName());
                                         break;
                                     case 1:
-                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getTareas());
+                                        celda.setCellValue(cursosvacios.get(i).getFullname());
                                         break;
                                     case 2:
+                                        String Profesores = null;
+                                        List<String> profesores = cursosvacios.get(i).getProfessor();
+                                        for(String a : profesores){
+                                            Profesores =  a + " \n";
+                                        }
+                                        celda.setCellValue(Profesores);
+                                        break;
+                                    case 3:
+                                        celda.setCellValue(cursosvacios.get(i).getCountContent().getTareas());
+                                        break;
+                                    case 4:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getConsultas());
                                         break;
 
-                                    case 3:
+                                    case 5:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getEtiquetas());
                                         break;
 
-                                    case 4:
+                                    case 6:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getForos());
                                         break;
-                                    case 5:
+                                    case 7:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getChats());
                                         break;
-                                    case 6:
+                                    case 8:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getLecciones());
                                         break;
-                                    case 7:
+                                    case 9:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getWikis());
                                         break;
-                                    case 8:
+                                    case 10:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getBases_de_datos());
                                         break;
-                                    case 9:
+                                    case 11:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getPaquetes_SCORM());
                                         break;
-                                    case 10:
+                                    case 12:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getArchivos());
                                         break;
-                                    case 11:
+                                    case 13:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getURLs());
                                         break;
-                                    case 12:
+                                    case 14:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getPaginas());
                                         break;
-                                    case 13:
+                                    case 15:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getCuestionarios());
                                         break;
-                                    case 14:
+                                    case 16:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getTalleres());
                                         break;
-                                    case 15:
+                                    case 17:
                                         celda.setCellValue(cursosvacios.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
                                         break;
-                                    case 16:
-                                        celda.setCellValue(cursosvacios.get(i).getProfessor());
-                                        break;
+                                    
 
                                 }
 

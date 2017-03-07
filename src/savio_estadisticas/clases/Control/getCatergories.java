@@ -62,6 +62,23 @@ public class getCatergories{
         
     }
     
+    public String GetNameCategories(String Categoryid){
+        CategoryName categoryname = new CategoryName();
+        try{
+                    String JSON = null;
+                    URL url = new URL(URI + "?categoryid=" + Categoryid);
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                    JSON = getStringFromInputStream(in);
+                    urlConnection.disconnect();
+                    categoryname = gson.fromJson(JSON,CategoryName.class); 
+                    return categoryname.getName();
+        }catch(Exception e){
+                    System.err.println("Ha saltado una excepcion");
+                        
+        }
+        return "No hay";
+    }
     
     private static String getStringFromInputStream(InputStream is) {
 

@@ -8,24 +8,11 @@ package savio_estadisticas.clases;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import java.util.ArrayList;
 import savio_estadisticas.clases.Control.CourseContent.countcontent;
 
 public class Course {
-
-    /**
-     * @return the Professor
-     */
-    public String getProfessor() {
-        return Professor;
-    }
-
-    /**
-     * @param Professor the Professor to set
-     */
-    public void setProfessor(String Professor) {
-        this.Professor = Professor;
-    }
-
+    
 @SerializedName("id")
 @Expose
 private Integer id;
@@ -112,7 +99,8 @@ private List<Courseformatoption> courseformatoptions = null;
 private Integer hiddensections;
 private countcontent CountContent = new countcontent();
 public String getCategoryid;
-private String Professor = "Nombre Profesor";
+private String CategoryName;
+private List<String> Professor = new ArrayList<String>();
 
 public Integer getId() {
 return id;
@@ -350,6 +338,34 @@ this.hiddensections = hiddensections;
      */
     public void setCountContent(countcontent CountContent) {
         this.CountContent = CountContent;
+    }
+
+    /**
+     * @return the Professor
+     */
+    public List<String> getProfessor() {
+        return Professor;
+    }
+
+    /**
+     * @param Professor the Professor to set
+     */
+    public void setProfessor(List<String> Professor) {
+        this.Professor = Professor;
+    }
+
+    /**
+     * @return the CategoryName
+     */
+    public String getCategoryName() {
+        return CategoryName;
+    }
+
+    /**
+     * @param CategoryName the CategoryName to set
+     */
+    public void setCategoryName(String CategoryName) {
+        this.CategoryName = CategoryName;
     }
 
 }
