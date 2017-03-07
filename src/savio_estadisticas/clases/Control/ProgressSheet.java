@@ -159,7 +159,6 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                         getJlb().setText("Analizando Cursos" + progress + "/" + getX().getCategoryCourses().size());
                     }
                 }
-
             });
             myThread.start();
             myThread.setName("Busqueda de curos parte " + k);
