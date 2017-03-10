@@ -71,12 +71,17 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
         for (int i = 0; i <= N; i = i + L) {
             List<Course> part;
 
-            if (k == 20) {
-                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L) + 1);
-                System.out.println(Math.min(N, i + L) + 1);
-            } else {
+            if ((getX().getCategoryCourses().size() % 2) == 0) {
                 part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L));
                 System.out.println(Math.min(N, i + L));
+            }else{
+                if (k == 20) {
+                    part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L) + 1);
+                    System.out.println(Math.min(N, i + L) + 1);
+                } else {
+                    part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L));
+                    System.out.println(Math.min(N, i + L));
+                }
             }
             k++;
             Thread myThread;
@@ -132,7 +137,7 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                             //Recursos
                                             case "Archivos":
                                                 for (Content_ fileContent : mod.getContents()) {
-                                                    h.getCountContent().upgradeArchivos();
+                                                       h.getCountContent().upgradeArchivos(); 
                                                 }
                                                 break;
                                             case "URLs":
