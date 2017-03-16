@@ -77,12 +77,16 @@ public class CategoriesControl extends Thread {
         for (int i = 0; i <= N; i = i + L) {
             List<Course> part;
 
-            if (k == 20) {
+            if ((N % 2) == 0) {
+                part = this.All_Courses.subList(i, Math.min(N, i + L));
+            }else{
+                if (k == 20) {
                 part = this.All_Courses.subList(i, Math.min(N, i + L) + 1);
                 System.out.println(Math.min(N, i + L) + 1);
-            } else {
-                part = this.All_Courses.subList(i, Math.min(N, i + L));
-                System.out.println(Math.min(N, i + L));
+                } else {
+                    part = this.All_Courses.subList(i, Math.min(N, i + L));
+                    System.out.println(Math.min(N, i + L));
+                }
             }
             k++;
             Thread myThread = new Thread(t1, new Runnable() {

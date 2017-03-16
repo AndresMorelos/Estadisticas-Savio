@@ -22,6 +22,7 @@ import savio_estadisticas.clases.CategoryName;
 public class getCatergories{
     private final String URI = "http://savio.utbvirtual.edu.co/course/category/";
     private Gson gson = new Gson();
+    private boolean exception = false;
     
     
     
@@ -32,6 +33,12 @@ public class getCatergories{
         CategoryName aux = new CategoryName();
         while(!categoryname.getParent().equals("0")){
                 try{
+                    if (exception) {
+                        System.out.println("Reintento por excepcion");
+                        System.out.println("Parent: " + categoryname.getParent() );
+                        exception = false;
+                    }
+                    
                     String JSON = null;
                     URL url = new URL(URI + "?categoryid=" + categoryname.getParent());
                     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -53,6 +60,7 @@ public class getCatergories{
                     }
                 }catch(Exception e){
                     System.err.println("Ha saltado una excepcion");
+                    exception = true;
                         
                 }
              
