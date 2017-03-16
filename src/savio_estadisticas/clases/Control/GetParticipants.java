@@ -39,28 +39,30 @@ public class GetParticipants{
     
   
      public List<String> getParticipants(){
-          try {
-            URL url = new URL(URL_Excecute + "?wsfunction=core_enrol_get_enrolled_users&wstoken="+ TOKEN +"&moodlewsrestformat=json&courseid=" + ID);
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-            JSON = getStringFromInputStream(in);
-            urlConnection.disconnect();
-            JSON2 = "{ \"participantes\":" + JSON + "}";
-            participantes = gson.fromJson(JSON2,Participants.class);
-            
-            for(Participante c: participantes.getParticipantes()) {
-                List<Role> g = c.getRoles();
-                for (Role j : g) {
-                    if (j.getRoleid() == 3) {
-                        getProfessor().add(c.getFullname());
-                        System.out.println("Profesor encontrado");
+          while(getProfessor() == null){
+              try {
+                URL url = new URL(URL_Excecute + "?wsfunction=core_enrol_get_enrolled_users&wstoken="+ TOKEN +"&moodlewsrestformat=json&courseid=" + ID);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+                JSON = getStringFromInputStream(in);
+                urlConnection.disconnect();
+                JSON2 = "{ \"participantes\":" + JSON + "}";
+                participantes = gson.fromJson(JSON2,Participants.class);
+
+                for(Participante c: participantes.getParticipantes()) {
+                    List<Role> g = c.getRoles();
+                    for (Role j : g) {
+                        if (j.getRoleid() == 3) {
+                            getProfessor().add(c.getFullname());
+                        }
                     }
                 }
+                return getProfessor();
+            }catch (Exception e){
+                System.out.println(e.getMessage());
             }
-            return getProfessor();
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+              
+          }
           return null;
      }
     
