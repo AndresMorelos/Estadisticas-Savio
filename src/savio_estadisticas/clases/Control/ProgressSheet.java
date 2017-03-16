@@ -70,19 +70,13 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
         ThreadGroup t1 = new ThreadGroup("Grupo Cursos");
         for (int i = 0; i <= N; i = i + L) {
             List<Course> part;
-
-            if ((getX().getCategoryCourses().size() % 2) == 0) {
-                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L));
-                System.out.println(Math.min(N, i + L));
-            }else{
-                if (k == 20) {
+                if (k == 20 && (getX().getCategoryCourses().size() % 2) != 0) {
                     part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L) + 1);
                     System.out.println(Math.min(N, i + L) + 1);
                 } else {
                     part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L));
                     System.out.println(Math.min(N, i + L));
-                }
-            }
+                }     
             k++;
             Thread myThread;
             myThread = new Thread(t1, new Runnable() {
