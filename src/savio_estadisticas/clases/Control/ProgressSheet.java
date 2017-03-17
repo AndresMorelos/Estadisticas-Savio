@@ -18,6 +18,7 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingWorker;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -70,13 +71,13 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
         ThreadGroup t1 = new ThreadGroup("Grupo Cursos");
         for (int i = 0; i <= N; i = i + L) {
             List<Course> part;
-                if (k == 20 && (getX().getCategoryCourses().size() % 2) != 0) {
-                    part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L) + 1);
-                    System.out.println(Math.min(N, i + L) + 1);
-                } else {
-                    part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L));
-                    System.out.println(Math.min(N, i + L));
-                }     
+            if (k == 20 && (getX().getCategoryCourses().size() % 2) != 0) {
+                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L) + 1);
+                System.out.println(Math.min(N, i + L) + 1);
+            } else {
+                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L));
+                System.out.println(Math.min(N, i + L));
+            }
             k++;
             Thread myThread;
             myThread = new Thread(t1, new Runnable() {
@@ -131,7 +132,7 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                             //Recursos
                                             case "Archivos":
                                                 for (Content_ fileContent : mod.getContents()) {
-                                                       h.getCountContent().upgradeArchivos(); 
+                                                    h.getCountContent().upgradeArchivos();
                                                 }
                                                 break;
                                             case "URLs":
@@ -180,10 +181,11 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
     }
 
     public void CreateSheet(String type, Node category, String FileName) {
+        System.out.println("Generando Estadisticas");
         List<Course> cursos = category.getCategoryCourses();
         switch (type) {
             case "Cursos Innovadores":
-                
+
                 try {
                     File hojadecalculo = new File(FileName);
 
@@ -200,7 +202,7 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
 
                     for (int i = 0; i < cursos.size(); i++) {
                         Row fila = hoja.createRow(i);
-                        for (int j = 0; j < 18; j++) {
+                        for (int j = 0; j < 19; j++) {
                             Cell celda = fila.createCell(j);
                             if (i == 0) {
                                 switch (j) {
@@ -260,11 +262,11 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                     case 17:
                                         celda.setCellValue("VPL");
                                         break;
-                                    
-
+                                    case 18:
+                                        celda.setCellValue("Innovador");
+                                        break;
                                 }
                             } else {
-
                                 switch (j) {
                                     case 0:
                                         celda.setCellValue(cursos.get(i).getCategoryName());
@@ -275,8 +277,8 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                     case 2:
                                         String Profesores = " ";
                                         List<String> profesores = cursos.get(i).getProfessor();
-                                        for(String a : profesores){
-                                            Profesores =  Profesores +  " \n" + a;
+                                        for (String a : profesores) {
+                                            Profesores = Profesores + " \n" + a;
                                         }
                                         celda.setCellValue(Profesores);
                                         break;
@@ -327,8 +329,13 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                     case 17:
                                         celda.setCellValue(cursos.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
                                         break;
-                                    
-
+                                    case 18:
+                                        if (cursos.get(i).getCountContent().isInnovator()) {
+                                            celda.setCellValue(1);
+                                        } else {
+                                            celda.setCellValue(0);
+                                        }
+                                        break;
                                 }
 
                             }
@@ -343,12 +350,11 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                     getOpenfile().setVisible(true);
                 } catch (Exception e) {
 
-                    System.err.println(e.getMessage());
+                    System.err.println(e.getMessage() + " " + e.getCause());
 
                 }
                 break;
             case "Cursos En Blanco":
-                
 
                 for (Course h : category.getCategoryCourses()) {
                     if (h.getCountContent().getTareas() == 0 && h.getCountContent().getConsultas() == 0 && h.getCountContent().getEtiquetas() == 0
@@ -437,7 +443,6 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                     case 17:
                                         celda.setCellValue("VPL");
                                         break;
-                                    
 
                                 }
                             } else {
@@ -452,8 +457,8 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                     case 2:
                                         String Profesores = " ";
                                         List<String> profesores = cursos.get(i).getProfessor();
-                                        for(String a : profesores){
-                                            Profesores =  Profesores +  " \n" + a;
+                                        for (String a : profesores) {
+                                            Profesores = Profesores + " \n" + a;
                                         }
                                         celda.setCellValue(Profesores);
                                         break;
@@ -504,7 +509,6 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                     case 17:
                                         celda.setCellValue(cursos.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
                                         break;
-                                    
 
                                 }
 
@@ -528,6 +532,8 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                 break;
 
         }
+
+        System.out.println("Estadisticas generadas");
 
     }
 

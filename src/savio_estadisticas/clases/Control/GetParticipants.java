@@ -53,7 +53,6 @@ public class GetParticipants{
                 for (Role j : g) {
                     if (j.getRoleid() == 3) {
                         getProfessor().add(c.getFullname());
-                        System.out.println("Profesor encontrado");
                     }
                 }
             }

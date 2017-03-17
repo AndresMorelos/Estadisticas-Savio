@@ -10,6 +10,7 @@ package savio_estadisticas.clases.Control.CourseContent;
  * @author amorelos
  */
 public class countcontent {
+
     private long Tareas;
     private long Consultas;
     private long Etiquetas;
@@ -26,7 +27,7 @@ public class countcontent {
     private long Cuestionarios;
     private long Talleres;
     private long Laboratorios_virtuales_de_programacion;
-    
+
     public countcontent() {
         this.Tareas = 0;
         this.Consultas = 0;
@@ -171,69 +172,69 @@ public class countcontent {
     public void setPaquetes_SCORM(long Paquetes_SCORM) {
         this.Paquetes_SCORM = Paquetes_SCORM;
     }
-    
-    public void upgradeArchivos(){
+
+    public void upgradeArchivos() {
         this.setArchivos(this.getArchivos() + 1);
     }
-    
-    public void upgradeBases_de_datos(){
+
+    public void upgradeBases_de_datos() {
         this.setBases_de_datos(this.getBases_de_datos() + 1);
     }
-    
-    public void upgradeChats(){
+
+    public void upgradeChats() {
         this.setChats(this.getChats() + 1);
     }
-    
-    public void upgradeConsultas(){
+
+    public void upgradeConsultas() {
         this.setConsultas(this.getConsultas() + 1);
     }
-    
-    public void upgradeEtiquetas(){
+
+    public void upgradeEtiquetas() {
         this.setEtiquetas(this.getEtiquetas() + 1);
     }
-    
-    public void upgradeForos(){
+
+    public void upgradeForos() {
         this.setForos(this.getForos() + 1);
     }
-    
-    public void upgradeLecciones(){
+
+    public void upgradeLecciones() {
         this.setLecciones(this.getLecciones() + 1);
     }
-    
-    public void upgradeLibros(){
+
+    public void upgradeLibros() {
         this.setLibros(this.getLibros() + 1);
     }
-    
-    public void upgradePaginas(){
+
+    public void upgradePaginas() {
         this.setPaginas(this.getPaginas() + 1);
     }
-    
-    public void upgradePaquetes_SCORM(){
+
+    public void upgradePaquetes_SCORM() {
         this.setPaquetes_SCORM(this.getPaquetes_SCORM() + 1);
     }
-    
-    public void upgradeTareas(){
+
+    public void upgradeTareas() {
         this.setTareas(this.getTareas() + 1);
     }
-    
-    public void upgradeURLs(){
+
+    public void upgradeURLs() {
         this.setURLs(this.getURLs() + 1);
     }
-    
-    public void upgradeWikis(){
+
+    public void upgradeWikis() {
         this.setWikis(this.getWikis() + 1);
     }
-    
-    public void upgradeCuestionarios(){
-        this.setCuestionarios(this.getCuestionarios()+1);
+
+    public void upgradeCuestionarios() {
+        this.setCuestionarios(this.getCuestionarios() + 1);
     }
-    
-    public void upgradeTalleres(){
-        this.setTalleres(this.getTalleres()+1);
+
+    public void upgradeTalleres() {
+        this.setTalleres(this.getTalleres() + 1);
     }
-    
-    public void upgradeLaboratorios_virtuales_de_programacion(){
-        this.setLaboratorios_virtuales_de_programacion(this.getLaboratorios_virtuales_de_programacion()+1);
+
+    public void upgradeLaboratorios_virtuales_de_programacion() {
+        this.setLaboratorios_virtuales_de_programacion(this.getLaboratorios_virtuales_de_programacion() + 1);
     }
 
     /**
@@ -328,10 +329,227 @@ public class countcontent {
     }
 
     /**
-     * @param Laboratorios_virtuales_de_programación the Laboratorios_virtuales_de_programación to set
+     * @param Laboratorios_virtuales_de_programación the
+     * Laboratorios_virtuales_de_programación to set
      */
     public void setLaboratorios_virtuales_de_programacion(long Laboratorios_virtuales_de_programación) {
         this.Laboratorios_virtuales_de_programacion = Laboratorios_virtuales_de_programación;
     }
-    
+
+    public boolean isInnovator() {
+        if ((Tareas > 0) && (Consultas > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Etiquetas > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Foros > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Chats > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Lecciones > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Wikis > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Bases_de_datos > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Etiquetas > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Foros > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Chats > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Lecciones > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Wikis > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Bases_de_datos > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Consultas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Foros > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Chats > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Lecciones > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Wikis > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Bases_de_datos > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Etiquetas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Chats > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Lecciones > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Wikis > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Bases_de_datos > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Foros > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Lecciones > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Wikis > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Bases_de_datos > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Chats > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Wikis > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Bases_de_datos > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (Bases_de_datos > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Wikis > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        }else if ((Bases_de_datos > 0) && (Paquetes_SCORM > 0)) {
+            return true;
+        } else if ((Bases_de_datos > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Bases_de_datos > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Bases_de_datos > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Bases_de_datos > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Bases_de_datos > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Bases_de_datos > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        }else if ((Paquetes_SCORM > 0) && (Archivos > 0)) {
+            return true;
+        } else if ((Paquetes_SCORM > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Paquetes_SCORM > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Paquetes_SCORM > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Paquetes_SCORM > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Paquetes_SCORM > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Archivos > 0) && (URLs > 0)) {
+            return true;
+        } else if ((Archivos > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((Archivos > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Archivos > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Archivos > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((URLs > 0) && (Paginas > 0)) {
+            return true;
+        } else if ((URLs > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((URLs > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((URLs > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Paginas > 0) && (Cuestionarios > 0)) {
+            return true;
+        } else if ((Paginas > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Paginas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Cuestionarios > 0) && (Talleres > 0)) {
+            return true;
+        } else if ((Cuestionarios > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Talleres > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 }
