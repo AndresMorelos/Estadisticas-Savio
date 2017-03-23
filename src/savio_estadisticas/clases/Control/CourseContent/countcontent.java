@@ -339,8 +339,6 @@ public class countcontent {
     public boolean isInnovator() {
         if ((Tareas > 0) && (Consultas > 0)) {
             return true;
-        } else if ((Tareas > 0) && (Etiquetas > 0)) {
-            return true;
         } else if ((Tareas > 0) && (Foros > 0)) {
             return true;
         } else if ((Tareas > 0) && (Chats > 0)) {
@@ -364,8 +362,6 @@ public class countcontent {
         } else if ((Tareas > 0) && (Talleres > 0)) {
             return true;
         } else if ((Tareas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
-            return true;
-        } else if ((Consultas > 0) && (Etiquetas > 0)) {
             return true;
         } else if ((Consultas > 0) && (Foros > 0)) {
             return true;
@@ -393,29 +389,7 @@ public class countcontent {
             return true;
         } else if ((Etiquetas > 0) && (Foros > 0)) {
             return true;
-        } else if ((Etiquetas > 0) && (Chats > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Lecciones > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Wikis > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Bases_de_datos > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Paquetes_SCORM > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Archivos > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (URLs > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Paginas > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Cuestionarios > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Talleres > 0)) {
-            return true;
-        } else if ((Etiquetas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
-            return true;
-        } else if ((Foros > 0) && (Chats > 0)) {
+        }else if ((Foros > 0) && (Chats > 0)) {
             return true;
         } else if ((Foros > 0) && (Lecciones > 0)) {
             return true;

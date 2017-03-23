@@ -190,7 +190,7 @@ public class Table_DataBase {
                         }
 
                     }
-
+                    GenerateStatistis(libro,cursos.size());
                     libro.write(archivo);
                     archivo.close();
                     setArchivo_Ubicacion(hojadecalculo);
@@ -364,7 +364,7 @@ public class Table_DataBase {
                         }
 
                     }
-                    GenerateStatistis(libro,cursos.size());
+                    
                     libro.write(archivo);
                     archivo.close();
                     setArchivo_Ubicacion(hojadecalculo);
@@ -415,7 +415,7 @@ public class Table_DataBase {
                                 celda_esta.setCellValue("Cursos");
                                 break;
                             case 2:
-                                celda_esta.setCellValue("Promedio");
+                                celda_esta.setCellValue("Promedio (%)");
                                 break;
                             case 3:
                                 celda_esta.setCellValue("Total Cursos");
@@ -431,7 +431,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!D:D,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -447,7 +447,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!E:E,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -463,7 +463,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!F:F,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -479,7 +479,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!G:G,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -495,7 +495,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!H:H,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -511,7 +511,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!I:I,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -527,7 +527,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!J:J,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -543,7 +543,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!K:K,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -559,7 +559,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!L:L,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -575,7 +575,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!M:M,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -591,7 +591,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!N:N,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -607,7 +607,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!O:O,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -623,7 +623,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!P:P,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -639,7 +639,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!Q:Q,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -655,7 +655,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!R:R,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -671,7 +671,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIF(Tabla!S:S,\">0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
@@ -687,7 +687,7 @@ public class Table_DataBase {
                                 celda_esta.setCellFormula("COUNTIFS(Tabla!D:D,\"<=0\",Tabla!E:E,\"<=0\",Tabla!F:F,\"<=0\",Tabla!G:G,\"<=0\",Tabla!H:H,\"<=0\",Tabla!I:I,\"<=0\",Tabla!J:J,\"<=0\",Tabla!K:K,\"<=0\",Tabla!L:L,\"<=0\",Tabla!M:M,\"<=0\",Tabla!N:N,\"<=0\",Tabla!O:O,\"<=0\",Tabla!P:P,\"<=0\",Tabla!Q:Q,\"<=0\",Tabla!R:R,\"<=0\")");
                                 break;
                             case 2:
-                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                celda_esta.setCellFormula("(B"+(i+1)+"/D2)*100");
                                 break;
                             case 3:
                                 celda_esta.setCellValue(total);
