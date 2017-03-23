@@ -21,13 +21,12 @@ import savio_estadisticas.clases.Node;
  * @author amorelos
  */
 public class Table_DataBase {
+
     private File Archivo_Ubicacion = null;
 
     public Table_DataBase() {
     }
-    
-    
-    
+
     public void CreateSheet(String type, Node category, String FileName) {
         System.out.println("Generando Estadisticas");
         List<Course> cursos = category.getCategoryCourses();
@@ -195,7 +194,7 @@ public class Table_DataBase {
                     libro.write(archivo);
                     archivo.close();
                     setArchivo_Ubicacion(hojadecalculo);
-                    
+
                 } catch (Exception e) {
 
                     System.err.println(e.getMessage() + " " + e.getCause());
@@ -365,11 +364,11 @@ public class Table_DataBase {
                         }
 
                     }
-
+                    GenerateStatistis(libro,cursos.size());
                     libro.write(archivo);
                     archivo.close();
                     setArchivo_Ubicacion(hojadecalculo);
-                   
+
                 } catch (Exception e) {
 
                     System.err.println(e.getMessage());
@@ -397,5 +396,308 @@ public class Table_DataBase {
      */
     public void setArchivo_Ubicacion(File Archivo_Ubicacion) {
         this.Archivo_Ubicacion = Archivo_Ubicacion;
+    }
+
+    public void GenerateStatistis(Workbook libro, int total) {
+        Sheet estadisticas = libro.createSheet("Estadisticas");
+
+        for (int i = 0; i < 19; i++) {
+            Row fila_esta = estadisticas.createRow(i);
+            for (int j = 0; j < 4; j++) {
+                Cell celda_esta = fila_esta.createCell(j);
+                switch (i) {
+                    case 0:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Recurso");
+                                break;
+                            case 1:
+                                celda_esta.setCellValue("Cursos");
+                                break;
+                            case 2:
+                                celda_esta.setCellValue("Promedio");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue("Total Cursos");
+                                break;
+                        }
+                        break;
+                    case 1:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Tareas");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!D:D,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Consultas");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!E:E,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                     case 3:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Etiquetas");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!F:F,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 4:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Foros");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!G:G,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 5:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Chats");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!H:H,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break; 
+                    case 6:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Lecciones");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!I:I,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 7:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Wikis");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!J:J,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 8:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Bases de Datos");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!K:K,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 9:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Paquetes SCORM");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!L:L,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 10:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Archivos");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!M:M,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 11:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("URLs");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!N:N,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 12:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Paginas");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!O:O,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 13:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Cuestionarios");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!P:P,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 14:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Talleres");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!Q:Q,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 15:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("VPL");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!R:R,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 16:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Innovadores");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!S:S,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 17:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("NINGUNO");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIFS(Tabla!D:D,\"<=0\",Tabla!E:E,\"<=0\",Tabla!F:F,\"<=0\",Tabla!G:G,\"<=0\",Tabla!H:H,\"<=0\",Tabla!I:I,\"<=0\",Tabla!J:J,\"<=0\",Tabla!K:K,\"<=0\",Tabla!L:L,\"<=0\",Tabla!M:M,\"<=0\",Tabla!N:N,\"<=0\",Tabla!O:O,\"<=0\",Tabla!P:P,\"<=0\",Tabla!Q:Q,\"<=0\",Tabla!R:R,\"<=0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("C"+(j+1)+"/D2");
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                }
+            }
+        }
+
+        //celda_esta.setCellFormula("COUNTIF(Tabla!S:S,\">0\")");
     }
 }
