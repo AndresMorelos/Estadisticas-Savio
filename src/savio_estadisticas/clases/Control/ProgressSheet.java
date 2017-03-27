@@ -150,6 +150,15 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
                                             case "Páginas":
                                                 h.getCountContent().upgradePaginas();
                                                 break;
+                                            case "Portfolios":
+                                                h.getCountContent().upgradePortafolio();
+                                                break;
+                                            case "Glosarios":
+                                                h.getCountContent().upgradeGlosario();
+                                                break;
+                                            case "Paquete de contenidos IMS":
+                                                h.getCountContent().upgradePaquete_IMS();
+                                                break;
                                         }
                                     }
                                 }

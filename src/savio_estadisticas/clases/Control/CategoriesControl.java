@@ -79,10 +79,10 @@ public class CategoriesControl extends Thread {
 
             if (k == 20) {
                 part = this.All_Courses.subList(i, Math.min(N, i + L) + 1);
-                System.out.println(Math.min(N, i + L) + 1);
+
             } else {
                 part = this.All_Courses.subList(i, Math.min(N, i + L));
-                System.out.println(Math.min(N, i + L));
+
             }
             k++;
             Thread myThread = new Thread(t1, new Runnable() {
@@ -107,7 +107,6 @@ public class CategoriesControl extends Thread {
                                     }
                                 }
                             } else {
-                                System.out.println("Nodo Creado");
 
                                 synchronized (NodesCategories) {
                                     NodesCategories.add(new Node(categoryname.getName()));
@@ -122,8 +121,6 @@ public class CategoriesControl extends Thread {
                                             getJpbar().setValue(progress);
                                             getJlLab().setText("Filtrando Cursos Por Categoria " + progress + "/" + All_Courses.size());
                                         }
-
-                                        System.out.println("Agreado");
 
                                         break;
                                     }

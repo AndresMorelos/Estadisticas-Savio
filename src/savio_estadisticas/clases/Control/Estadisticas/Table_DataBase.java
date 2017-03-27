@@ -52,7 +52,7 @@ public class Table_DataBase {
 
                     for (int i = 0; i < cursos.size(); i++) {
                         Row fila = hoja.createRow(i);
-                        for (int j = 0; j < 19; j++) {
+                        for (int j = 0; j < 22; j++) {
                             Cell celda = fila.createCell(j);
                             if (i == 0) {
                                 switch (j) {
@@ -113,6 +113,15 @@ public class Table_DataBase {
                                         celda.setCellValue("VPL");
                                         break;
                                     case 18:
+                                        celda.setCellValue("Libros");
+                                        break;
+                                    case 19:
+                                        celda.setCellValue("Portafolio");
+                                        break;
+                                    case 20:
+                                        celda.setCellValue("Glosario");
+                                        break;
+                                    case 21:
                                         celda.setCellValue("Innovador");
                                         break;
                                 }
@@ -180,6 +189,15 @@ public class Table_DataBase {
                                         celda.setCellValue(cursos.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
                                         break;
                                     case 18:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getLibros());
+                                        break;
+                                    case 19:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getPortafolio());
+                                        break;
+                                    case 20:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getGlosario());
+                                        break;
+                                    case 21:
                                         if (cursos.get(i).getCountContent().isInnovator()) {
                                             celda.setCellValue(1);
                                         } else {
@@ -221,7 +239,8 @@ public class Table_DataBase {
                             && h.getCountContent().getForos() == 0 && h.getCountContent().getChats() == 0 && h.getCountContent().getWikis() == 0
                             && h.getCountContent().getBases_de_datos() == 0 && h.getCountContent().getPaquetes_SCORM() == 0 && h.getCountContent().getArchivos() == 0
                             && h.getCountContent().getURLs() == 0 && h.getCountContent().getPaginas() == 0 && h.getCountContent().getCuestionarios() == 0 && h.getCountContent().getTalleres() == 0
-                            && h.getCountContent().getLaboratorios_virtuales_de_programacion() == 0 && h.getCountContent().getLecciones() == 0) {
+                            && h.getCountContent().getLaboratorios_virtuales_de_programacion() == 0 && h.getCountContent().getLecciones() == 0 && h.getCountContent().getGlosario() == 0
+                            && h.getCountContent().getPortafolio() == 0 && h.getCountContent().getLibros() == 0) {
                         cursos.add(h);
                     }
 
@@ -243,7 +262,7 @@ public class Table_DataBase {
 
                     for (int i = 0; i < cursos.size(); i++) {
                         Row fila = hoja.createRow(i);
-                        for (int j = 0; j < 18; j++) {
+                        for (int j = 0; j < 21; j++) {
                             Cell celda = fila.createCell(j);
                             if (i == 0) {
                                 switch (j) {
@@ -302,6 +321,15 @@ public class Table_DataBase {
                                         break;
                                     case 17:
                                         celda.setCellValue("VPL");
+                                        break;
+                                    case 18:
+                                        celda.setCellValue("Libros");
+                                        break;
+                                    case 19:
+                                        celda.setCellValue("Portafolio");
+                                        break;
+                                    case 20:
+                                        celda.setCellValue("Glosario");
                                         break;
 
                                 }
@@ -369,6 +397,15 @@ public class Table_DataBase {
                                     case 17:
                                         celda.setCellValue(cursos.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
                                         break;
+                                    case 18:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getLibros());
+                                        break;
+                                    case 19:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getPortafolio());
+                                        break;
+                                    case 20:
+                                        celda.setCellValue(cursos.get(i).getCountContent().getGlosario());
+                                        break;
 
                                 }
 
@@ -414,7 +451,7 @@ public class Table_DataBase {
     public void GenerateStatistis(Workbook libro, int total, int Ninguno) {
         Sheet estadisticas = libro.createSheet("Estadisticas");
 
-        for (int i = 0; i < 19; i++) {
+        for (int i = 0; i < 22; i++) {
             Row fila_esta = estadisticas.createRow(i);
             for (int j = 0; j < 4; j++) {
                 Cell celda_esta = fila_esta.createCell(j);
@@ -723,7 +760,7 @@ public class Table_DataBase {
                     case 16:
                         switch (j) {
                             case 0:
-                                celda_esta.setCellValue("Innovadores");
+                                celda_esta.setCellValue("Libros");
                                 break;
                             case 1:
                                 celda_esta.setCellFormula("COUNTIF(Tabla!S:S,\">0\")");
@@ -740,6 +777,63 @@ public class Table_DataBase {
                         }
                         break;
                     case 17:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Glosario");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!T:T,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("B"+(i+1)+"/D2");
+                                CellStyle style = libro.createCellStyle();
+                                style.setDataFormat(libro.createDataFormat().getFormat("0.0%"));
+                                celda_esta.setCellStyle(style);
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 18:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Portafolio");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!U:U,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("B"+(i+1)+"/D2");
+                                CellStyle style = libro.createCellStyle();
+                                style.setDataFormat(libro.createDataFormat().getFormat("0.0%"));
+                                celda_esta.setCellStyle(style);
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 19:
+                        switch (j) {
+                            case 0:
+                                celda_esta.setCellValue("Innovadores");
+                                break;
+                            case 1:
+                                celda_esta.setCellFormula("COUNTIF(Tabla!V:V,\">0\")");
+                                break;
+                            case 2:
+                                celda_esta.setCellFormula("B"+(i+1)+"/D2");
+                                CellStyle style = libro.createCellStyle();
+                                style.setDataFormat(libro.createDataFormat().getFormat("0.0%"));
+                                celda_esta.setCellStyle(style);
+                                break;
+                            case 3:
+                                celda_esta.setCellValue(total);
+                                break;
+                        }
+                        break;
+                    case 20:
                         switch (j) {
                             case 0:
                                 celda_esta.setCellValue("Ninguno");

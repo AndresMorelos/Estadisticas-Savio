@@ -27,6 +27,9 @@ public class countcontent {
     private long Cuestionarios;
     private long Talleres;
     private long Laboratorios_virtuales_de_programacion;
+    private long Portafolio;
+    private long Glosario;
+    private long paquete_ims;
 
     public countcontent() {
         this.Tareas = 0;
@@ -237,6 +240,18 @@ public class countcontent {
         this.setLaboratorios_virtuales_de_programacion(this.getLaboratorios_virtuales_de_programacion() + 1);
     }
 
+    public void upgradeGlosario() {
+        this.setGlosario(this.getGlosario() + 1);
+    }
+
+    public void upgradePortafolio() {
+        this.setPortafolio(this.getPortafolio() + 1);
+    }
+
+    public void upgradePaquete_IMS() {
+        this.setPaquete_ims(this.getPaquete_ims() + 1);
+    }
+
     /**
      * @return the Archivos
      */
@@ -351,17 +366,17 @@ public class countcontent {
             return true;
         } else if ((Tareas > 0) && (Paquetes_SCORM > 0)) {
             return true;
-        } else if ((Tareas > 0) && (Archivos > 0)) {
-            return true;
-        } else if ((Tareas > 0) && (URLs > 0)) {
-            return true;
-        } else if ((Tareas > 0) && (Paginas > 0)) {
+        } else if ((Tareas > 0) && (Libros > 0)) {
             return true;
         } else if ((Tareas > 0) && (Cuestionarios > 0)) {
             return true;
         } else if ((Tareas > 0) && (Talleres > 0)) {
             return true;
         } else if ((Tareas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Glosario > 0)) {
+            return true;
+        } else if ((Tareas > 0) && (Portafolio > 0)) {
             return true;
         } else if ((Consultas > 0) && (Foros > 0)) {
             return true;
@@ -375,11 +390,7 @@ public class countcontent {
             return true;
         } else if ((Consultas > 0) && (Paquetes_SCORM > 0)) {
             return true;
-        } else if ((Consultas > 0) && (Archivos > 0)) {
-            return true;
-        } else if ((Consultas > 0) && (URLs > 0)) {
-            return true;
-        } else if ((Consultas > 0) && (Paginas > 0)) {
+        } else if ((Consultas > 0) && (Libros > 0)) {
             return true;
         } else if ((Consultas > 0) && (Cuestionarios > 0)) {
             return true;
@@ -387,9 +398,11 @@ public class countcontent {
             return true;
         } else if ((Consultas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
             return true;
-        } else if ((Etiquetas > 0) && (Foros > 0)) {
+        } else if ((Consultas > 0) && (Glosario > 0)) {
             return true;
-        }else if ((Foros > 0) && (Chats > 0)) {
+        } else if ((Consultas > 0) && (Portafolio > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Chats > 0)) {
             return true;
         } else if ((Foros > 0) && (Lecciones > 0)) {
             return true;
@@ -399,17 +412,15 @@ public class countcontent {
             return true;
         } else if ((Foros > 0) && (Paquetes_SCORM > 0)) {
             return true;
-        } else if ((Foros > 0) && (Archivos > 0)) {
-            return true;
-        } else if ((Foros > 0) && (URLs > 0)) {
-            return true;
-        } else if ((Foros > 0) && (Paginas > 0)) {
-            return true;
         } else if ((Foros > 0) && (Cuestionarios > 0)) {
             return true;
         } else if ((Foros > 0) && (Talleres > 0)) {
             return true;
         } else if ((Foros > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Glosario > 0)) {
+            return true;
+        } else if ((Foros > 0) && (Portafolio > 0)) {
             return true;
         } else if ((Chats > 0) && (Lecciones > 0)) {
             return true;
@@ -419,17 +430,15 @@ public class countcontent {
             return true;
         } else if ((Chats > 0) && (Paquetes_SCORM > 0)) {
             return true;
-        } else if ((Chats > 0) && (Archivos > 0)) {
-            return true;
-        } else if ((Chats > 0) && (URLs > 0)) {
-            return true;
-        } else if ((Chats > 0) && (Paginas > 0)) {
-            return true;
         } else if ((Chats > 0) && (Cuestionarios > 0)) {
             return true;
         } else if ((Chats > 0) && (Talleres > 0)) {
             return true;
         } else if ((Chats > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Glosario > 0)) {
+            return true;
+        } else if ((Chats > 0) && (Portafolio > 0)) {
             return true;
         } else if ((Lecciones > 0) && (Wikis > 0)) {
             return true;
@@ -449,6 +458,10 @@ public class countcontent {
             return true;
         } else if ((Lecciones > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
             return true;
+        } else if ((Lecciones > 0) && (Glosario > 0)) {
+            return true;
+        } else if ((Lecciones > 0) && (Portafolio > 0)) {
+            return true;
         } else if ((Wikis > 0) && (Bases_de_datos > 0)) {
             return true;
         } else if ((Wikis > 0) && (Paquetes_SCORM > 0)) {
@@ -465,13 +478,11 @@ public class countcontent {
             return true;
         } else if ((Wikis > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
             return true;
-        }else if ((Bases_de_datos > 0) && (Paquetes_SCORM > 0)) {
+        } else if ((Wikis > 0) && (Glosario > 0)) {
             return true;
-        } else if ((Bases_de_datos > 0) && (Archivos > 0)) {
+        } else if ((Wikis > 0) && (Portafolio > 0)) {
             return true;
-        } else if ((Bases_de_datos > 0) && (URLs > 0)) {
-            return true;
-        } else if ((Bases_de_datos > 0) && (Paginas > 0)) {
+        } else if ((Bases_de_datos > 0) && (Paquetes_SCORM > 0)) {
             return true;
         } else if ((Bases_de_datos > 0) && (Cuestionarios > 0)) {
             return true;
@@ -479,51 +490,82 @@ public class countcontent {
             return true;
         } else if ((Bases_de_datos > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
             return true;
-        }else if ((Paquetes_SCORM > 0) && (Archivos > 0)) {
-            return true;
-        } else if ((Paquetes_SCORM > 0) && (URLs > 0)) {
-            return true;
-        } else if ((Paquetes_SCORM > 0) && (Paginas > 0)) {
-            return true;
         } else if ((Paquetes_SCORM > 0) && (Cuestionarios > 0)) {
             return true;
         } else if ((Paquetes_SCORM > 0) && (Talleres > 0)) {
             return true;
         } else if ((Paquetes_SCORM > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
             return true;
-        } else if ((Archivos > 0) && (URLs > 0)) {
+        } else if ((Paquetes_SCORM > 0) && (Glosario > 0)) {
             return true;
-        } else if ((Archivos > 0) && (Paginas > 0)) {
-            return true;
-        } else if ((Archivos > 0) && (Cuestionarios > 0)) {
-            return true;
-        } else if ((Archivos > 0) && (Talleres > 0)) {
-            return true;
-        } else if ((Archivos > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
-            return true;
-        } else if ((URLs > 0) && (Paginas > 0)) {
-            return true;
-        } else if ((URLs > 0) && (Cuestionarios > 0)) {
-            return true;
-        } else if ((URLs > 0) && (Talleres > 0)) {
-            return true;
-        } else if ((URLs > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
-            return true;
-        } else if ((Paginas > 0) && (Cuestionarios > 0)) {
-            return true;
-        } else if ((Paginas > 0) && (Talleres > 0)) {
-            return true;
-        } else if ((Paginas > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
+        } else if ((Paquetes_SCORM > 0) && (Portafolio > 0)) {
             return true;
         } else if ((Cuestionarios > 0) && (Talleres > 0)) {
             return true;
         } else if ((Cuestionarios > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
             return true;
+        } else if ((Cuestionarios > 0) && (Glosario > 0)) {
+            return true;
+        } else if ((Cuestionarios > 0) && (Portafolio > 0)) {
+            return true;
         } else if ((Talleres > 0) && (Laboratorios_virtuales_de_programacion > 0)) {
             return true;
-        }else{
+        } else if ((Talleres > 0) && (Glosario > 0)) {
+            return true;
+        } else if ((Talleres > 0) && (Portafolio > 0)) {
+            return true;
+        } else if ((Laboratorios_virtuales_de_programacion > 0) && (Glosario > 0)) {
+            return true;
+        } else if ((Laboratorios_virtuales_de_programacion > 0) && (Portafolio > 0)) {
+            return true;
+        } else if ((Glosario > 0) && (Portafolio > 0)) {
+            return true;
+        } else {
             return false;
         }
 
     }
+
+    /**
+     * @return the Portafolio
+     */
+    public long getPortafolio() {
+        return Portafolio;
+    }
+
+    /**
+     * @param Portafolio the Portafolio to set
+     */
+    public void setPortafolio(long Portafolio) {
+        this.Portafolio = Portafolio;
+    }
+
+    /**
+     * @return the Glosario
+     */
+    public long getGlosario() {
+        return Glosario;
+    }
+
+    /**
+     * @param Glosario the Glosario to set
+     */
+    public void setGlosario(long Glosario) {
+        this.Glosario = Glosario;
+    }
+
+    /**
+     * @return the paquete_ims
+     */
+    public long getPaquete_ims() {
+        return paquete_ims;
+    }
+
+    /**
+     * @param paquete_ims the paquete_ims to set
+     */
+    public void setPaquete_ims(long paquete_ims) {
+        this.paquete_ims = paquete_ims;
+    }
+
 }
