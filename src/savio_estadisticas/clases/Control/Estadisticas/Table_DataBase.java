@@ -235,9 +235,10 @@ public class Table_DataBase {
                 }
                 break;
             case "Cursos En Blanco":
+                List<Node> cursos_blancos_subcategoria = new ArrayList<Node>();
 
                 for (Course h : category.getCategoryCourses()) {
-                    
+
                     if (h.getCountContent().getTareas() == 0 && h.getCountContent().getConsultas() == 0 && h.getCountContent().getEtiquetas() == 0
                             && h.getCountContent().getForos() == 0 && h.getCountContent().getChats() == 0 && h.getCountContent().getWikis() == 0
                             && h.getCountContent().getBases_de_datos() == 0 && h.getCountContent().getPaquetes_SCORM() == 0 && h.getCountContent().getArchivos() == 0
@@ -247,6 +248,24 @@ public class Table_DataBase {
                         CursosBlancosSheet.add(h);
                     }
 
+                }
+
+                for (Course j : CursosBlancosSheet) {
+                    if (cursos_blancos_subcategoria.size() > 0) {
+                        for (Node l : cursos_blancos_subcategoria) {
+                            if (l.getNameCategory().equalsIgnoreCase(j.getCategoryName())) {
+                                l.addCourse(j);
+                            } else {
+                                Node aux = new Node(j.getCategoryName());
+                                aux.addCourse(j);
+                                cursos_blancos_subcategoria.add(aux);
+                            }
+                        }
+                    } else {
+                        Node aux = new Node(j.getCategoryName());
+                        aux.addCourse(j);
+                        cursos_blancos_subcategoria.add(aux);
+                    }
                 }
 
                 try {
@@ -262,162 +281,49 @@ public class Table_DataBase {
 
                     FileOutputStream archivo = new FileOutputStream(hojadecalculo);
 
-                    Sheet hoja = libro.createSheet("Tabla");
+                    for (Node k : cursos_blancos_subcategoria) {
+                        Sheet hoja = libro.createSheet(k.getNameCategory());
 
-                    for (int i = 0; i < CursosBlancosSheet.size(); i++) {
-                        Row fila = hoja.createRow(i);
-                        for (int j = 0; j < 21; j++) {
-                            Cell celda = fila.createCell(j);
-                            if (i == 0) {
-                                switch (j) {
-                                    case 0:
-                                        celda.setCellValue("SubCategoria");
-                                        break;
-                                    case 1:
-                                        celda.setCellValue("Nombre Curso");
-                                        break;
-                                    case 2:
-                                        celda.setCellValue("Profesor");
-                                        break;
-                                    case 3:
-                                        celda.setCellValue("Tareas");
-                                        break;
-                                    case 4:
-                                        celda.setCellValue("Consultas");
-                                        break;
+                        for (int i = 0; i < k.getCategoryCourses().size(); i++) {
+                            Row fila = hoja.createRow(i);
+                            for (int j = 0; j < 3; j++) {
+                                Cell celda = fila.createCell(j);
+                                if (i == 0) {
+                                    switch (j) {
+                                        case 0:
+                                            celda.setCellValue("SubCategoria");
+                                            break;
+                                        case 1:
+                                            celda.setCellValue("Nombre Curso");
+                                            break;
+                                        case 2:
+                                            celda.setCellValue("Profesor");
+                                            break;
+                                    }
+                                } else {
 
-                                    case 5:
-                                        celda.setCellValue("Etiquetas");
-                                        break;
-
-                                    case 6:
-                                        celda.setCellValue("Foros");
-                                        break;
-                                    case 7:
-                                        celda.setCellValue("Chats");
-                                        break;
-                                    case 8:
-                                        celda.setCellValue("Lecciones");
-                                        break;
-                                    case 9:
-                                        celda.setCellValue("Wikis");
-                                        break;
-                                    case 10:
-                                        celda.setCellValue("Bases de Datos");
-                                        break;
-                                    case 11:
-                                        celda.setCellValue("Paquetes SCORM");
-                                        break;
-                                    case 12:
-                                        celda.setCellValue("Archivos");
-                                        break;
-                                    case 13:
-                                        celda.setCellValue("URLs");
-                                        break;
-                                    case 14:
-                                        celda.setCellValue("Paginas");
-                                        break;
-                                    case 15:
-                                        celda.setCellValue("Cuestionarios");
-                                        break;
-                                    case 16:
-                                        celda.setCellValue("Talleres");
-                                        break;
-                                    case 17:
-                                        celda.setCellValue("VPL");
-                                        break;
-                                    case 18:
-                                        celda.setCellValue("Libros");
-                                        break;
-                                    case 19:
-                                        celda.setCellValue("Portafolio");
-                                        break;
-                                    case 20:
-                                        celda.setCellValue("Glosario");
-                                        break;
-
-                                }
-                            } else {
-
-                                switch (j) {
-                                    case 0:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCategoryName());
-                                        break;
-                                    case 1:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getFullname());
-                                        break;
-                                    case 2:
-                                        String Profesores = " ";
-                                        List<String> profesores = CursosBlancosSheet.get(i).getProfessor();
-                                        for (String a : profesores) {
-                                            Profesores = Profesores + " \n" + a;
-                                        }
-                                        celda.setCellValue(Profesores);
-                                        break;
-                                    case 3:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getTareas());
-                                        break;
-                                    case 4:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getConsultas());
-                                        break;
-
-                                    case 5:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getEtiquetas());
-                                        break;
-
-                                    case 6:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getForos());
-                                        break;
-                                    case 7:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getChats());
-                                        break;
-                                    case 8:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getLecciones());
-                                        break;
-                                    case 9:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getWikis());
-                                        break;
-                                    case 10:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getBases_de_datos());
-                                        break;
-                                    case 11:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getPaquetes_SCORM());
-                                        break;
-                                    case 12:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getArchivos());
-                                        break;
-                                    case 13:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getURLs());
-                                        break;
-                                    case 14:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getPaginas());
-                                        break;
-                                    case 15:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getCuestionarios());
-                                        break;
-                                    case 16:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getTalleres());
-                                        break;
-                                    case 17:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getLaboratorios_virtuales_de_programacion());
-                                        break;
-                                    case 18:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getLibros());
-                                        break;
-                                    case 19:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getPortafolio());
-                                        break;
-                                    case 20:
-                                        celda.setCellValue(CursosBlancosSheet.get(i).getCountContent().getGlosario());
-                                        break;
+                                    switch (j) {
+                                        case 0:
+                                            celda.setCellValue(k.getCategoryCourses().get(i).getCategoryName());
+                                            break;
+                                        case 1:
+                                            celda.setCellValue(k.getCategoryCourses().get(i).getFullname());
+                                            break;
+                                        case 2:
+                                            String Profesores = " ";
+                                            List<String> profesores = k.getCategoryCourses().get(i).getProfessor();
+                                            for (String a : profesores) {
+                                                Profesores = Profesores + " \n" + a;
+                                            }
+                                            celda.setCellValue(Profesores);
+                                            break;
+                                    }
 
                                 }
 
                             }
 
                         }
-                        
-
                     }
 
                     libro.write(archivo);
