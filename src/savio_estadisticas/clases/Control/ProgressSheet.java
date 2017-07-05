@@ -75,11 +75,9 @@ public class ProgressSheet extends SwingWorker<Integer, String> {
         for (int i = 0; i <= N; i = i + L) {
             List<Course> part;
             if (k == 20 && (getX().getCategoryCourses().size() % 2) != 0) {
-                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L) + 1);
-                System.out.println(Math.min(N, i + L) + 1);
+                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L) + 1);    
             } else {
-                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L));
-                System.out.println(Math.min(N, i + L));
+                part = this.x.getCategoryCourses().subList(i, Math.min(N, i + L)); 
             }
             k++;
             Thread myThread;

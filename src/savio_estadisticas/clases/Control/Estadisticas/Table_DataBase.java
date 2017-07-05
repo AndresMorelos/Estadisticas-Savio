@@ -135,10 +135,10 @@ public class Table_DataBase {
                                         celda.setCellValue(cursos.get(i).getFullname());
                                         break;
                                     case 2:
-                                        String Profesores = " ";
+                                        String Profesores = "";
                                         List<String> profesores = cursos.get(i).getProfessor();
                                         for (String a : profesores) {
-                                            Profesores = Profesores + " \n" + a;
+                                            Profesores = Profesores + " / " + a;
                                         }
                                         celda.setCellValue(Profesores);
                                         break;
@@ -238,7 +238,7 @@ public class Table_DataBase {
                 List<Node> cursos_blancos_subcategoria = new ArrayList<Node>();
 
                 for (Course h : category.getCategoryCourses()) {
-
+           
                     if (h.getCountContent().getTareas() == 0 && h.getCountContent().getConsultas() == 0 && h.getCountContent().getEtiquetas() == 0
                             && h.getCountContent().getForos() == 0 && h.getCountContent().getChats() == 0 && h.getCountContent().getWikis() == 0
                             && h.getCountContent().getBases_de_datos() == 0 && h.getCountContent().getPaquetes_SCORM() == 0 && h.getCountContent().getArchivos() == 0
@@ -249,25 +249,34 @@ public class Table_DataBase {
                     }
 
                 }
-
+                
                 for (Course j : CursosBlancosSheet) {
                     if (cursos_blancos_subcategoria.size() > 0) {
+                        boolean added = false;
                         for (Node l : cursos_blancos_subcategoria) {
-                            if (l.getNameCategory().equalsIgnoreCase(j.getCategoryName())) {
+                            if (j.getCategoryName().equalsIgnoreCase(l.getNameCategory())) {
                                 l.addCourse(j);
-                            } else {
-                                Node aux = new Node(j.getCategoryName());
-                                aux.addCourse(j);
-                                cursos_blancos_subcategoria.add(aux);
+                                added = true;
+                                System.out.println("Curso Nuevo Agregado Categoria " + l.getNameCategory());
                             }
                         }
+                        if (!added) {
+                            Node aux = new Node(j.getCategoryName());
+                            aux.addCourse(j);
+                            cursos_blancos_subcategoria.add(aux);
+                            System.out.println("Agregando el Nodo " + aux.getNameCategory());
+                        }
+                        System.out.println("Sigo yo " + j.getFullname());
                     } else {
                         Node aux = new Node(j.getCategoryName());
                         aux.addCourse(j);
                         cursos_blancos_subcategoria.add(aux);
+                        System.out.println("Agregando el primer Nodo " + aux.getNameCategory());
                     }
                 }
-
+                
+                
+                System.out.println("finish");
                 try {
                     System.out.println("Generando Hoja de Calculo");
                     File hojadecalculo = new File(FileName);
@@ -282,6 +291,8 @@ public class Table_DataBase {
                     FileOutputStream archivo = new FileOutputStream(hojadecalculo);
 
                     for (Node k : cursos_blancos_subcategoria) {
+                        System.out.println("Creando Hoja para la categoria " + k.getNameCategory());
+                        System.out.println("Total Categorias " + cursos_blancos_subcategoria.size());
                         Sheet hoja = libro.createSheet(k.getNameCategory());
 
                         for (int i = 0; i < k.getCategoryCourses().size(); i++) {
@@ -310,10 +321,10 @@ public class Table_DataBase {
                                             celda.setCellValue(k.getCategoryCourses().get(i).getFullname());
                                             break;
                                         case 2:
-                                            String Profesores = " ";
+                                            String Profesores = "";
                                             List<String> profesores = k.getCategoryCourses().get(i).getProfessor();
                                             for (String a : profesores) {
-                                                Profesores = Profesores + " \n" + a;
+                                                Profesores = Profesores + " / " + a;
                                             }
                                             celda.setCellValue(Profesores);
                                             break;
