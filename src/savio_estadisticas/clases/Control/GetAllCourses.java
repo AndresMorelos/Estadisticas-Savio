@@ -23,7 +23,7 @@ public class GetAllCourses extends Thread {
     private final String URL_Excecute = "http://savio.utbvirtual.edu.co/webservice/rest/server.php";
     private String JSON = null;
     private String JSON2 = null;
-    private final String TOKEN = "fcb816dffd9554ba32ca6b620fe3e6f7";
+    private final String TOKEN = "b07e86b079d0bdf8094e09c3d1020c89";
     private Gson gson = new Gson();
     private Courses cursos;
     @Override
